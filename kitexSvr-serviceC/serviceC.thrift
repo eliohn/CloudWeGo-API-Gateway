@@ -12,5 +12,5 @@ struct CResp {
 
 //----------------------A service-------------------
 service CService {
-    CResp requestA(1: CReq req)(api.post = '/C/req')
+    CResp RequestC(1: CReq req)(api.post = '/C-req')
 }

@@ -11,7 +11,7 @@ import (
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
-	RequestA(ctx context.Context, req *service.BReq, callOptions ...callopt.Option) (r *service.BResp, err error)
+	RequestB(ctx context.Context, req *service.BReq, callOptions ...callopt.Option) (r *service.BResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -43,7 +43,7 @@ type kBServiceClient struct {
 	*kClient
 }
 
-func (p *kBServiceClient) RequestA(ctx context.Context, req *service.BReq, callOptions ...callopt.Option) (r *service.BResp, err error) {
+func (p *kBServiceClient) RequestB(ctx context.Context, req *service.BReq, callOptions ...callopt.Option) (r *service.BResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.RequestA(ctx, req)
+	return p.kClient.RequestB(ctx, req)
 }

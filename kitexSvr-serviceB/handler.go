@@ -9,8 +9,8 @@ import (
 // BServiceImpl implements the last service interface defined in the IDL.
 type BServiceImpl struct{}
 
-// RequestA implements the BServiceImpl interface.
-func (s *BServiceImpl) RequestA(ctx context.Context, req *service.BReq) (resp *service.BResp, err error) {
+// RequestB implements the BServiceImpl interface.
+func (s *BServiceImpl) RequestB(ctx context.Context, req *service.BReq) (resp *service.BResp, err error) {
 	// TODO: Your code here...
 	log.Println("Server B receive request: " + req.Data)
 	resp = &service.BResp{

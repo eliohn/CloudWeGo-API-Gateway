@@ -12,5 +12,5 @@ struct DResp {
 
 //----------------------D service-------------------
 service DService {
-    DResp requestA(1: DReq req)(api.post = '/D/req')
+    DResp RequestD(1: DReq req)(api.post = '/D-req')
 }

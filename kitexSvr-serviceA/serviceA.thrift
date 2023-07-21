@@ -12,5 +12,5 @@ struct AResp {
 
 //----------------------A service-------------------
 service AService {
-    AResp requestA(1: AReq req)(api.post = '/A/req')
+    AResp RequestA(1: AReq req)(api.post = '/A-req')
 }

@@ -19,7 +19,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	serviceName := "DService"
 	handlerType := (*service.DService)(nil)
 	methods := map[string]kitex.MethodInfo{
-		"requestA": kitex.NewMethodInfo(requestAHandler, newDServiceRequestAArgs, newDServiceRequestAResult, false),
+		"RequestD": kitex.NewMethodInfo(requestDHandler, newDServiceRequestDArgs, newDServiceRequestDResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName": "service",
@@ -35,22 +35,22 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	return svcInfo
 }
 
-func requestAHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*service.DServiceRequestAArgs)
-	realResult := result.(*service.DServiceRequestAResult)
-	success, err := handler.(service.DService).RequestA(ctx, realArg.Req)
+func requestDHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*service.DServiceRequestDArgs)
+	realResult := result.(*service.DServiceRequestDResult)
+	success, err := handler.(service.DService).RequestD(ctx, realArg.Req)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newDServiceRequestAArgs() interface{} {
-	return service.NewDServiceRequestAArgs()
+func newDServiceRequestDArgs() interface{} {
+	return service.NewDServiceRequestDArgs()
 }
 
-func newDServiceRequestAResult() interface{} {
-	return service.NewDServiceRequestAResult()
+func newDServiceRequestDResult() interface{} {
+	return service.NewDServiceRequestDResult()
 }
 
 type kClient struct {
@@ -63,11 +63,11 @@ func newServiceClient(c client.Client) *kClient {
 	}
 }
 
-func (p *kClient) RequestA(ctx context.Context, req *service.DReq) (r *service.DResp, err error) {
-	var _args service.DServiceRequestAArgs
+func (p *kClient) RequestD(ctx context.Context, req *service.DReq) (r *service.DResp, err error) {
+	var _args service.DServiceRequestDArgs
 	_args.Req = req
-	var _result service.DServiceRequestAResult
-	if err = p.c.Call(ctx, "requestA", &_args, &_result); err != nil {
+	var _result service.DServiceRequestDResult
+	if err = p.c.Call(ctx, "RequestD", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

@@ -422,7 +422,7 @@ func (p *AServiceRequestAArgs) FastWrite(buf []byte) int {
 
 func (p *AServiceRequestAArgs) FastWriteNocopy(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "requestA_args")
+	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "RequestA_args")
 	if p != nil {
 		offset += p.fastWriteField1(buf[offset:], binaryWriter)
 	}
@@ -433,7 +433,7 @@ func (p *AServiceRequestAArgs) FastWriteNocopy(buf []byte, binaryWriter bthrift.
 
 func (p *AServiceRequestAArgs) BLength() int {
 	l := 0
-	l += bthrift.Binary.StructBeginLength("requestA_args")
+	l += bthrift.Binary.StructBeginLength("RequestA_args")
 	if p != nil {
 		l += p.field1Length()
 	}
@@ -549,7 +549,7 @@ func (p *AServiceRequestAResult) FastWrite(buf []byte) int {
 
 func (p *AServiceRequestAResult) FastWriteNocopy(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "requestA_result")
+	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "RequestA_result")
 	if p != nil {
 		offset += p.fastWriteField0(buf[offset:], binaryWriter)
 	}
@@ -560,7 +560,7 @@ func (p *AServiceRequestAResult) FastWriteNocopy(buf []byte, binaryWriter bthrif
 
 func (p *AServiceRequestAResult) BLength() int {
 	l := 0
-	l += bthrift.Binary.StructBeginLength("requestA_result")
+	l += bthrift.Binary.StructBeginLength("RequestA_result")
 	if p != nil {
 		l += p.field0Length()
 	}

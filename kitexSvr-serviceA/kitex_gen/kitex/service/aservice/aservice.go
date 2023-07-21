@@ -19,7 +19,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	serviceName := "AService"
 	handlerType := (*service.AService)(nil)
 	methods := map[string]kitex.MethodInfo{
-		"requestA": kitex.NewMethodInfo(requestAHandler, newAServiceRequestAArgs, newAServiceRequestAResult, false),
+		"RequestA": kitex.NewMethodInfo(requestAHandler, newAServiceRequestAArgs, newAServiceRequestAResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName": "service",
@@ -67,7 +67,7 @@ func (p *kClient) RequestA(ctx context.Context, req *service.AReq) (r *service.A
 	var _args service.AServiceRequestAArgs
 	_args.Req = req
 	var _result service.AServiceRequestAResult
-	if err = p.c.Call(ctx, "requestA", &_args, &_result); err != nil {
+	if err = p.c.Call(ctx, "RequestA", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

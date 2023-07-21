@@ -430,7 +430,7 @@ func (p *AServiceClient) RequestA(ctx context.Context, req *AReq) (r *AResp, err
 	var _args AServiceRequestAArgs
 	_args.Req = req
 	var _result AServiceRequestAResult
-	if err = p.Client_().Call(ctx, "requestA", &_args, &_result); err != nil {
+	if err = p.Client_().Call(ctx, "RequestA", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
@@ -456,7 +456,7 @@ func (p *AServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFunction 
 
 func NewAServiceProcessor(handler AService) *AServiceProcessor {
 	self := &AServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self.AddToProcessorMap("requestA", &aServiceProcessorRequestA{handler: handler})
+	self.AddToProcessorMap("RequestA", &aServiceProcessorRequestA{handler: handler})
 	return self
 }
 func (p *AServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -486,7 +486,7 @@ func (p *aServiceProcessorRequestA) Process(ctx context.Context, seqId int32, ip
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
-		oprot.WriteMessageBegin("requestA", thrift.EXCEPTION, seqId)
+		oprot.WriteMessageBegin("RequestA", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -498,8 +498,8 @@ func (p *aServiceProcessorRequestA) Process(ctx context.Context, seqId int32, ip
 	result := AServiceRequestAResult{}
 	var retval *AResp
 	if retval, err2 = p.handler.RequestA(ctx, args.Req); err2 != nil {
-		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing requestA: "+err2.Error())
-		oprot.WriteMessageBegin("requestA", thrift.EXCEPTION, seqId)
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing RequestA: "+err2.Error())
+		oprot.WriteMessageBegin("RequestA", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -507,7 +507,7 @@ func (p *aServiceProcessorRequestA) Process(ctx context.Context, seqId int32, ip
 	} else {
 		result.Success = retval
 	}
-	if err2 = oprot.WriteMessageBegin("requestA", thrift.REPLY, seqId); err2 != nil {
+	if err2 = oprot.WriteMessageBegin("RequestA", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -626,7 +626,7 @@ func (p *AServiceRequestAArgs) ReadField1(iprot thrift.TProtocol) error {
 
 func (p *AServiceRequestAArgs) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("requestA_args"); err != nil {
+	if err = oprot.WriteStructBegin("RequestA_args"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -798,7 +798,7 @@ func (p *AServiceRequestAResult) ReadField0(iprot thrift.TProtocol) error {
 
 func (p *AServiceRequestAResult) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("requestA_result"); err != nil {
+	if err = oprot.WriteStructBegin("RequestA_result"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {

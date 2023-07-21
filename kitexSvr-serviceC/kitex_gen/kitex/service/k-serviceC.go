@@ -331,7 +331,7 @@ func (p *CResp) field2Length() int {
 	return l
 }
 
-func (p *CServiceRequestAArgs) FastRead(buf []byte) (int, error) {
+func (p *CServiceRequestCArgs) FastRead(buf []byte) (int, error) {
 	var err error
 	var offset int
 	var l int
@@ -393,7 +393,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_CServiceRequestAArgs[fieldId]), err)
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_CServiceRequestCArgs[fieldId]), err)
 SkipFieldError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 ReadFieldEndError:
@@ -402,7 +402,7 @@ ReadStructEndError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *CServiceRequestAArgs) FastReadField1(buf []byte) (int, error) {
+func (p *CServiceRequestCArgs) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
 	tmp := NewCReq()
@@ -416,13 +416,13 @@ func (p *CServiceRequestAArgs) FastReadField1(buf []byte) (int, error) {
 }
 
 // for compatibility
-func (p *CServiceRequestAArgs) FastWrite(buf []byte) int {
+func (p *CServiceRequestCArgs) FastWrite(buf []byte) int {
 	return 0
 }
 
-func (p *CServiceRequestAArgs) FastWriteNocopy(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+func (p *CServiceRequestCArgs) FastWriteNocopy(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "requestA_args")
+	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "RequestC_args")
 	if p != nil {
 		offset += p.fastWriteField1(buf[offset:], binaryWriter)
 	}
@@ -431,9 +431,9 @@ func (p *CServiceRequestAArgs) FastWriteNocopy(buf []byte, binaryWriter bthrift.
 	return offset
 }
 
-func (p *CServiceRequestAArgs) BLength() int {
+func (p *CServiceRequestCArgs) BLength() int {
 	l := 0
-	l += bthrift.Binary.StructBeginLength("requestA_args")
+	l += bthrift.Binary.StructBeginLength("RequestC_args")
 	if p != nil {
 		l += p.field1Length()
 	}
@@ -442,7 +442,7 @@ func (p *CServiceRequestAArgs) BLength() int {
 	return l
 }
 
-func (p *CServiceRequestAArgs) fastWriteField1(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+func (p *CServiceRequestCArgs) fastWriteField1(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
 	offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "req", thrift.STRUCT, 1)
 	offset += p.Req.FastWriteNocopy(buf[offset:], binaryWriter)
@@ -450,7 +450,7 @@ func (p *CServiceRequestAArgs) fastWriteField1(buf []byte, binaryWriter bthrift.
 	return offset
 }
 
-func (p *CServiceRequestAArgs) field1Length() int {
+func (p *CServiceRequestCArgs) field1Length() int {
 	l := 0
 	l += bthrift.Binary.FieldBeginLength("req", thrift.STRUCT, 1)
 	l += p.Req.BLength()
@@ -458,7 +458,7 @@ func (p *CServiceRequestAArgs) field1Length() int {
 	return l
 }
 
-func (p *CServiceRequestAResult) FastRead(buf []byte) (int, error) {
+func (p *CServiceRequestCResult) FastRead(buf []byte) (int, error) {
 	var err error
 	var offset int
 	var l int
@@ -520,7 +520,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_CServiceRequestAResult[fieldId]), err)
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_CServiceRequestCResult[fieldId]), err)
 SkipFieldError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 ReadFieldEndError:
@@ -529,7 +529,7 @@ ReadStructEndError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *CServiceRequestAResult) FastReadField0(buf []byte) (int, error) {
+func (p *CServiceRequestCResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
 
 	tmp := NewCResp()
@@ -543,13 +543,13 @@ func (p *CServiceRequestAResult) FastReadField0(buf []byte) (int, error) {
 }
 
 // for compatibility
-func (p *CServiceRequestAResult) FastWrite(buf []byte) int {
+func (p *CServiceRequestCResult) FastWrite(buf []byte) int {
 	return 0
 }
 
-func (p *CServiceRequestAResult) FastWriteNocopy(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+func (p *CServiceRequestCResult) FastWriteNocopy(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
-	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "requestA_result")
+	offset += bthrift.Binary.WriteStructBegin(buf[offset:], "RequestC_result")
 	if p != nil {
 		offset += p.fastWriteField0(buf[offset:], binaryWriter)
 	}
@@ -558,9 +558,9 @@ func (p *CServiceRequestAResult) FastWriteNocopy(buf []byte, binaryWriter bthrif
 	return offset
 }
 
-func (p *CServiceRequestAResult) BLength() int {
+func (p *CServiceRequestCResult) BLength() int {
 	l := 0
-	l += bthrift.Binary.StructBeginLength("requestA_result")
+	l += bthrift.Binary.StructBeginLength("RequestC_result")
 	if p != nil {
 		l += p.field0Length()
 	}
@@ -569,7 +569,7 @@ func (p *CServiceRequestAResult) BLength() int {
 	return l
 }
 
-func (p *CServiceRequestAResult) fastWriteField0(buf []byte, binaryWriter bthrift.BinaryWriter) int {
+func (p *CServiceRequestCResult) fastWriteField0(buf []byte, binaryWriter bthrift.BinaryWriter) int {
 	offset := 0
 	if p.IsSetSuccess() {
 		offset += bthrift.Binary.WriteFieldBegin(buf[offset:], "success", thrift.STRUCT, 0)
@@ -579,7 +579,7 @@ func (p *CServiceRequestAResult) fastWriteField0(buf []byte, binaryWriter bthrif
 	return offset
 }
 
-func (p *CServiceRequestAResult) field0Length() int {
+func (p *CServiceRequestCResult) field0Length() int {
 	l := 0
 	if p.IsSetSuccess() {
 		l += bthrift.Binary.FieldBeginLength("success", thrift.STRUCT, 0)
@@ -589,10 +589,10 @@ func (p *CServiceRequestAResult) field0Length() int {
 	return l
 }
 
-func (p *CServiceRequestAArgs) GetFirstArgument() interface{} {
+func (p *CServiceRequestCArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-func (p *CServiceRequestAResult) GetResult() interface{} {
+func (p *CServiceRequestCResult) GetResult() interface{} {
 	return p.Success
 }

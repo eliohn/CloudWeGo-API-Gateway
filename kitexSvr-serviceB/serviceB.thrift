@@ -12,5 +12,5 @@ struct BResp {
 
 //----------------------A service-------------------
 service BService {
-    BResp requestA(1: BReq req)(api.post = '/B/req')
+    BResp RequestB(1: BReq req)(api.post = '/B-req')
 }

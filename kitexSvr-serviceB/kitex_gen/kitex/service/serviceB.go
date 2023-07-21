@@ -397,7 +397,7 @@ func (p *BResp) Field2DeepEqual(src string) bool {
 }
 
 type BService interface {
-	RequestA(ctx context.Context, req *BReq) (r *BResp, err error)
+	RequestB(ctx context.Context, req *BReq) (r *BResp, err error)
 }
 
 type BServiceClient struct {
@@ -426,11 +426,11 @@ func (p *BServiceClient) Client_() thrift.TClient {
 	return p.c
 }
 
-func (p *BServiceClient) RequestA(ctx context.Context, req *BReq) (r *BResp, err error) {
-	var _args BServiceRequestAArgs
+func (p *BServiceClient) RequestB(ctx context.Context, req *BReq) (r *BResp, err error) {
+	var _args BServiceRequestBArgs
 	_args.Req = req
-	var _result BServiceRequestAResult
-	if err = p.Client_().Call(ctx, "requestA", &_args, &_result); err != nil {
+	var _result BServiceRequestBResult
+	if err = p.Client_().Call(ctx, "RequestB", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
@@ -456,7 +456,7 @@ func (p *BServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFunction 
 
 func NewBServiceProcessor(handler BService) *BServiceProcessor {
 	self := &BServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self.AddToProcessorMap("requestA", &bServiceProcessorRequestA{handler: handler})
+	self.AddToProcessorMap("RequestB", &bServiceProcessorRequestB{handler: handler})
 	return self
 }
 func (p *BServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -477,16 +477,16 @@ func (p *BServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TPr
 	return false, x
 }
 
-type bServiceProcessorRequestA struct {
+type bServiceProcessorRequestB struct {
 	handler BService
 }
 
-func (p *bServiceProcessorRequestA) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := BServiceRequestAArgs{}
+func (p *bServiceProcessorRequestB) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := BServiceRequestBArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
-		oprot.WriteMessageBegin("requestA", thrift.EXCEPTION, seqId)
+		oprot.WriteMessageBegin("RequestB", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -495,11 +495,11 @@ func (p *bServiceProcessorRequestA) Process(ctx context.Context, seqId int32, ip
 
 	iprot.ReadMessageEnd()
 	var err2 error
-	result := BServiceRequestAResult{}
+	result := BServiceRequestBResult{}
 	var retval *BResp
-	if retval, err2 = p.handler.RequestA(ctx, args.Req); err2 != nil {
-		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing requestA: "+err2.Error())
-		oprot.WriteMessageBegin("requestA", thrift.EXCEPTION, seqId)
+	if retval, err2 = p.handler.RequestB(ctx, args.Req); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing RequestB: "+err2.Error())
+		oprot.WriteMessageBegin("RequestB", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -507,7 +507,7 @@ func (p *bServiceProcessorRequestA) Process(ctx context.Context, seqId int32, ip
 	} else {
 		result.Success = retval
 	}
-	if err2 = oprot.WriteMessageBegin("requestA", thrift.REPLY, seqId); err2 != nil {
+	if err2 = oprot.WriteMessageBegin("RequestB", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -525,39 +525,39 @@ func (p *bServiceProcessorRequestA) Process(ctx context.Context, seqId int32, ip
 	return true, err
 }
 
-type BServiceRequestAArgs struct {
+type BServiceRequestBArgs struct {
 	Req *BReq `thrift:"req,1" frugal:"1,default,BReq" json:"req"`
 }
 
-func NewBServiceRequestAArgs() *BServiceRequestAArgs {
-	return &BServiceRequestAArgs{}
+func NewBServiceRequestBArgs() *BServiceRequestBArgs {
+	return &BServiceRequestBArgs{}
 }
 
-func (p *BServiceRequestAArgs) InitDefault() {
-	*p = BServiceRequestAArgs{}
+func (p *BServiceRequestBArgs) InitDefault() {
+	*p = BServiceRequestBArgs{}
 }
 
-var BServiceRequestAArgs_Req_DEFAULT *BReq
+var BServiceRequestBArgs_Req_DEFAULT *BReq
 
-func (p *BServiceRequestAArgs) GetReq() (v *BReq) {
+func (p *BServiceRequestBArgs) GetReq() (v *BReq) {
 	if !p.IsSetReq() {
-		return BServiceRequestAArgs_Req_DEFAULT
+		return BServiceRequestBArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *BServiceRequestAArgs) SetReq(val *BReq) {
+func (p *BServiceRequestBArgs) SetReq(val *BReq) {
 	p.Req = val
 }
 
-var fieldIDToName_BServiceRequestAArgs = map[int16]string{
+var fieldIDToName_BServiceRequestBArgs = map[int16]string{
 	1: "req",
 }
 
-func (p *BServiceRequestAArgs) IsSetReq() bool {
+func (p *BServiceRequestBArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *BServiceRequestAArgs) Read(iprot thrift.TProtocol) (err error) {
+func (p *BServiceRequestBArgs) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -606,7 +606,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_BServiceRequestAArgs[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_BServiceRequestBArgs[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -616,7 +616,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *BServiceRequestAArgs) ReadField1(iprot thrift.TProtocol) error {
+func (p *BServiceRequestBArgs) ReadField1(iprot thrift.TProtocol) error {
 	p.Req = NewBReq()
 	if err := p.Req.Read(iprot); err != nil {
 		return err
@@ -624,9 +624,9 @@ func (p *BServiceRequestAArgs) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *BServiceRequestAArgs) Write(oprot thrift.TProtocol) (err error) {
+func (p *BServiceRequestBArgs) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("requestA_args"); err != nil {
+	if err = oprot.WriteStructBegin("RequestB_args"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -653,7 +653,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *BServiceRequestAArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *BServiceRequestBArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -670,14 +670,14 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *BServiceRequestAArgs) String() string {
+func (p *BServiceRequestBArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("BServiceRequestAArgs(%+v)", *p)
+	return fmt.Sprintf("BServiceRequestBArgs(%+v)", *p)
 }
 
-func (p *BServiceRequestAArgs) DeepEqual(ano *BServiceRequestAArgs) bool {
+func (p *BServiceRequestBArgs) DeepEqual(ano *BServiceRequestBArgs) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
@@ -689,7 +689,7 @@ func (p *BServiceRequestAArgs) DeepEqual(ano *BServiceRequestAArgs) bool {
 	return true
 }
 
-func (p *BServiceRequestAArgs) Field1DeepEqual(src *BReq) bool {
+func (p *BServiceRequestBArgs) Field1DeepEqual(src *BReq) bool {
 
 	if !p.Req.DeepEqual(src) {
 		return false
@@ -697,39 +697,39 @@ func (p *BServiceRequestAArgs) Field1DeepEqual(src *BReq) bool {
 	return true
 }
 
-type BServiceRequestAResult struct {
+type BServiceRequestBResult struct {
 	Success *BResp `thrift:"success,0,optional" frugal:"0,optional,BResp" json:"success,omitempty"`
 }
 
-func NewBServiceRequestAResult() *BServiceRequestAResult {
-	return &BServiceRequestAResult{}
+func NewBServiceRequestBResult() *BServiceRequestBResult {
+	return &BServiceRequestBResult{}
 }
 
-func (p *BServiceRequestAResult) InitDefault() {
-	*p = BServiceRequestAResult{}
+func (p *BServiceRequestBResult) InitDefault() {
+	*p = BServiceRequestBResult{}
 }
 
-var BServiceRequestAResult_Success_DEFAULT *BResp
+var BServiceRequestBResult_Success_DEFAULT *BResp
 
-func (p *BServiceRequestAResult) GetSuccess() (v *BResp) {
+func (p *BServiceRequestBResult) GetSuccess() (v *BResp) {
 	if !p.IsSetSuccess() {
-		return BServiceRequestAResult_Success_DEFAULT
+		return BServiceRequestBResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *BServiceRequestAResult) SetSuccess(x interface{}) {
+func (p *BServiceRequestBResult) SetSuccess(x interface{}) {
 	p.Success = x.(*BResp)
 }
 
-var fieldIDToName_BServiceRequestAResult = map[int16]string{
+var fieldIDToName_BServiceRequestBResult = map[int16]string{
 	0: "success",
 }
 
-func (p *BServiceRequestAResult) IsSetSuccess() bool {
+func (p *BServiceRequestBResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *BServiceRequestAResult) Read(iprot thrift.TProtocol) (err error) {
+func (p *BServiceRequestBResult) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -778,7 +778,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_BServiceRequestAResult[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_BServiceRequestBResult[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -788,7 +788,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *BServiceRequestAResult) ReadField0(iprot thrift.TProtocol) error {
+func (p *BServiceRequestBResult) ReadField0(iprot thrift.TProtocol) error {
 	p.Success = NewBResp()
 	if err := p.Success.Read(iprot); err != nil {
 		return err
@@ -796,9 +796,9 @@ func (p *BServiceRequestAResult) ReadField0(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *BServiceRequestAResult) Write(oprot thrift.TProtocol) (err error) {
+func (p *BServiceRequestBResult) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("requestA_result"); err != nil {
+	if err = oprot.WriteStructBegin("RequestB_result"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -825,7 +825,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *BServiceRequestAResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *BServiceRequestBResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			goto WriteFieldBeginError
@@ -844,14 +844,14 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
 }
 
-func (p *BServiceRequestAResult) String() string {
+func (p *BServiceRequestBResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("BServiceRequestAResult(%+v)", *p)
+	return fmt.Sprintf("BServiceRequestBResult(%+v)", *p)
 }
 
-func (p *BServiceRequestAResult) DeepEqual(ano *BServiceRequestAResult) bool {
+func (p *BServiceRequestBResult) DeepEqual(ano *BServiceRequestBResult) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
@@ -863,7 +863,7 @@ func (p *BServiceRequestAResult) DeepEqual(ano *BServiceRequestAResult) bool {
 	return true
 }
 
-func (p *BServiceRequestAResult) Field0DeepEqual(src *BResp) bool {
+func (p *BServiceRequestBResult) Field0DeepEqual(src *BResp) bool {
 
 	if !p.Success.DeepEqual(src) {
 		return false

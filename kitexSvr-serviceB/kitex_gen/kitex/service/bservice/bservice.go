@@ -19,7 +19,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	serviceName := "BService"
 	handlerType := (*service.BService)(nil)
 	methods := map[string]kitex.MethodInfo{
-		"requestA": kitex.NewMethodInfo(requestAHandler, newBServiceRequestAArgs, newBServiceRequestAResult, false),
+		"RequestB": kitex.NewMethodInfo(requestBHandler, newBServiceRequestBArgs, newBServiceRequestBResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName": "service",
@@ -35,22 +35,22 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	return svcInfo
 }
 
-func requestAHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*service.BServiceRequestAArgs)
-	realResult := result.(*service.BServiceRequestAResult)
-	success, err := handler.(service.BService).RequestA(ctx, realArg.Req)
+func requestBHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*service.BServiceRequestBArgs)
+	realResult := result.(*service.BServiceRequestBResult)
+	success, err := handler.(service.BService).RequestB(ctx, realArg.Req)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newBServiceRequestAArgs() interface{} {
-	return service.NewBServiceRequestAArgs()
+func newBServiceRequestBArgs() interface{} {
+	return service.NewBServiceRequestBArgs()
 }
 
-func newBServiceRequestAResult() interface{} {
-	return service.NewBServiceRequestAResult()
+func newBServiceRequestBResult() interface{} {
+	return service.NewBServiceRequestBResult()
 }
 
 type kClient struct {
@@ -63,11 +63,11 @@ func newServiceClient(c client.Client) *kClient {
 	}
 }
 
-func (p *kClient) RequestA(ctx context.Context, req *service.BReq) (r *service.BResp, err error) {
-	var _args service.BServiceRequestAArgs
+func (p *kClient) RequestB(ctx context.Context, req *service.BReq) (r *service.BResp, err error) {
+	var _args service.BServiceRequestBArgs
 	_args.Req = req
-	var _result service.BServiceRequestAResult
-	if err = p.c.Call(ctx, "requestA", &_args, &_result); err != nil {
+	var _result service.BServiceRequestBResult
+	if err = p.c.Call(ctx, "RequestB", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
