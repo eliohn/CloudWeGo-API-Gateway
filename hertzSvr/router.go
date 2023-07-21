@@ -5,15 +5,14 @@ package main
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
 	handler "hertzSvr/biz/handler"
-	"hertzSvr/biz/handler/hertzSvr/service"
 )
 
 // customizeRegister registers customize routers.
 func customizedRegister(r *server.Hertz) {
 	r.GET("/ping", handler.Ping)
-	r.POST("/request-a", service.RequestA)
-	r.POST("/request-b", service.RequestB)
-	r.POST("/request-c", service.RequestC)
-	r.POST("/request-d", service.RequestD)
+	//r.POST("/request-a", service.RequestA)
+	//r.POST("/request-b", service.RequestB)
+	//r.POST("/request-c", service.RequestC)
+	//r.POST("/request-d", service.RequestD)
 	// your code ...
 }

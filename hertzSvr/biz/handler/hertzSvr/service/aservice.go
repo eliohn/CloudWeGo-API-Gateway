@@ -8,7 +8,6 @@ import (
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	"hertzSvr/biz/handler/hertzSvr/utils"
 	service "hertzSvr/biz/model/hertzSvr/service"
-	"log"
 )
 
 // RequestA .
@@ -22,13 +21,16 @@ func RequestA(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	if clientInfo.name != "AService" {
-		clientInfo.name = "AService"
-		clientInfo.cli = utils.NewClient("AService", provider, resolver)
-	}
+	//if clientInfo.name != "AService" {
+	//	clientInfo.name = "AService"
+	//	err = provider.UpdateIDL(idlAContent, map[string]string{})
+	//	if err != nil {
+	//		panic("Error: update idl failed---" + err.Error())
+	//	}
+	//	clientInfo.cli = utils.NewClient("AService", provider, resolver)
+	//}
 
-	log.Println(clientInfo.cli)
-	resp := utils.GetHTTPGenericResponse(ctx, c, "RequestA", clientInfo.cli)
+	resp := utils.GetHTTPGenericResponse(ctx, c, "RequestA", cliA)
 
 	c.JSON(consts.StatusOK, resp)
 }

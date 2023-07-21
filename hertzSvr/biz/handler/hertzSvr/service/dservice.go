@@ -5,6 +5,7 @@ package service
 import (
 	"context"
 	"hertzSvr/biz/handler/hertzSvr/utils"
+	"log"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
@@ -22,12 +23,17 @@ func RequestD(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	if clientInfo.name != "DService" {
-		clientInfo.name = "DService"
-		clientInfo.cli = utils.NewClient(clientInfo.name, provider, resolver)
-	}
+	//if clientInfo.name != "DService" {
+	//	clientInfo.name = "DService"
+	//	err = provider.UpdateIDL(idlDContent, map[string]string{})
+	//	if err != nil {
+	//		panic("Error: update idl failed---" + err.Error())
+	//	}
+	//	clientInfo.cli = utils.NewClient(clientInfo.name, provider, resolver)
+	//}
 
-	resp := utils.GetHTTPGenericResponse(ctx, c, "RequestD", clientInfo.cli)
+	log.Println(clientInfo.name)
+	resp := utils.GetHTTPGenericResponse(ctx, c, "RequestD", cliD)
 
 	c.JSON(consts.StatusOK, resp)
 }

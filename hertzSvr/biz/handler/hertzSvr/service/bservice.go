@@ -22,12 +22,16 @@ func RequestB(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	if clientInfo.name != "BService" {
-		clientInfo.name = "BService"
-		clientInfo.cli = utils.NewClient(clientInfo.name, provider, resolver)
-	}
+	//if clientInfo.name != "BService" {
+	//	clientInfo.name = "BService"
+	//	err = provider.UpdateIDL(idlBContent, map[string]string{})
+	//	if err != nil {
+	//		panic("Error: update idl failed---" + err.Error())
+	//	}
+	//	clientInfo.cli = utils.NewClient(clientInfo.name, provider, resolver)
+	//}
 
-	resp := utils.GetHTTPGenericResponse(ctx, c, "RequestB", clientInfo.cli)
+	resp := utils.GetHTTPGenericResponse(ctx, c, "RequestB", cliB)
 
 	c.JSON(consts.StatusOK, resp)
 }
