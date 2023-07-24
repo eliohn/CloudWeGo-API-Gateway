@@ -19,9 +19,3 @@ func (s *HertzSvrImpl) Request(ctx context.Context, request *service.SvrRequest)
 	}
 	return
 }
-
-// RegisterIDL implements the HertzSvrImpl interface.
-func (s *HertzSvrImpl) RegisterIDL(ctx context.Context, idl *service.RegisterIDL) (resp *service.SvrResponse, err error) {
-	// TODO: Your code here...
-	return
-}

@@ -17,7 +17,7 @@ func InitEtcdRegistry(s *HertzSvrImpl, serviceName string, addr *net.TCPAddr) se
 
 	ebi := &rpcinfo.EndpointBasicInfo{
 		ServiceName: serviceName,
-		Tags:        map[string]string{"Cluster": "DServiceCluster"},
+		Tags:        map[string]string{"Cluster": "AServiceCluster"},
 	}
 
 	svr := service.NewServer(s, server.WithRegistry(r), server.WithServiceAddr(addr), server.WithServerBasicInfo(ebi))
@@ -29,7 +29,7 @@ func main() {
 	addr, _ := net.ResolveTCPAddr("tcp", ":9993")
 	s := new(HertzSvrImpl)
 
-	svr := InitEtcdRegistry(s, "DService", addr)
+	svr := InitEtcdRegistry(s, "AService", addr)
 	err := svr.Run()
 
 	if err != nil {
