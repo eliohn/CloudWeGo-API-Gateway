@@ -1,16 +1,15 @@
 namespace go kitex.service
 
-//--------------------D request & response--------------
-struct DReq {
-    1: string data(api.body='data')
+struct SvrRequest{
+    1: string svrName (api.body="svrName")
+    2: string bizParams (api.body="bizParams") //应该是JSON，用string代替
 }
 
-struct DResp {
-    1: bool success(api.body='success'),
-    2: string message(api.body='message'),
+struct SvrResponse{
+    1: bool success (api.body="success")
+    2: string message (api.body="message") //应该是JSON，用string代替
 }
 
-//----------------------D service-------------------
-service DService {
-    DResp RequestD(1: DReq req)(api.post = '/D-req')
+service HertzSvr{
+    SvrResponse Request(1: SvrRequest request)(api.post="/request")
 }

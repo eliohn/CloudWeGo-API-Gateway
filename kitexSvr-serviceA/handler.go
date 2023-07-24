@@ -6,14 +6,14 @@ import (
 	"log"
 )
 
-// AServiceImpl implements the last service interface defined in the IDL.
-type AServiceImpl struct{}
+// HertzSvrImpl implements the last service interface defined in the IDL.
+type HertzSvrImpl struct{}
 
-// RequestA implements the AServiceImpl interface.
-func (s *AServiceImpl) RequestA(ctx context.Context, req *service.AReq) (resp *service.AResp, err error) {
+// Request implements the HertzSvrImpl interface.
+func (s *HertzSvrImpl) Request(ctx context.Context, request *service.SvrRequest) (resp *service.SvrResponse, err error) {
 	// TODO: Your code here...
-	log.Println("Server A receive request: " + req.Data)
-	resp = &service.AResp{
+	log.Println("Server A receive request: " + request.BizParams)
+	resp = &service.SvrResponse{
 		Success: true,
 		Message: "A success",
 	}

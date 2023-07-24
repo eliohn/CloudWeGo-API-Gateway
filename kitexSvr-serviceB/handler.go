@@ -6,16 +6,22 @@ import (
 	"log"
 )
 
-// BServiceImpl implements the last service interface defined in the IDL.
-type BServiceImpl struct{}
+// HertzSvrImpl implements the last service interface defined in the IDL.
+type HertzSvrImpl struct{}
 
-// RequestB implements the BServiceImpl interface.
-func (s *BServiceImpl) RequestB(ctx context.Context, req *service.BReq) (resp *service.BResp, err error) {
+// Request implements the HertzSvrImpl interface.
+func (s *HertzSvrImpl) Request(ctx context.Context, request *service.SvrRequest) (resp *service.SvrResponse, err error) {
 	// TODO: Your code here...
-	log.Println("Server B receive request: " + req.Data)
-	resp = &service.BResp{
+	log.Println("Server B receive request: " + request.BizParams)
+	resp = &service.SvrResponse{
 		Success: true,
 		Message: "B success",
 	}
+	return
+}
+
+// RegisterIDL implements the HertzSvrImpl interface.
+func (s *HertzSvrImpl) RegisterIDL(ctx context.Context, idl *service.RegisterIDL) (resp *service.SvrResponse, err error) {
+	// TODO: Your code here...
 	return
 }

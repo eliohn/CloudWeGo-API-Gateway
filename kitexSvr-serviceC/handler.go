@@ -6,14 +6,14 @@ import (
 	"log"
 )
 
-// CServiceImpl implements the last service interface defined in the IDL.
-type CServiceImpl struct{}
+// HertzSvrImpl implements the last service interface defined in the IDL.
+type HertzSvrImpl struct{}
 
-// RequestC implements the CServiceImpl interface.
-func (s *CServiceImpl) RequestC(ctx context.Context, req *service.CReq) (resp *service.CResp, err error) {
+// Request implements the HertzSvrImpl interface.
+func (s *HertzSvrImpl) Request(ctx context.Context, request *service.SvrRequest) (resp *service.SvrResponse, err error) {
 	// TODO: Your code here...
-	log.Println("Server C receive request: " + req.Data)
-	resp = &service.CResp{
+	log.Println("Server C receive request: " + request.BizParams)
+	resp = &service.SvrResponse{
 		Success: true,
 		Message: "C success",
 	}

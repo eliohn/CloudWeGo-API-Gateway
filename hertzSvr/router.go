@@ -10,9 +10,5 @@ import (
 // customizeRegister registers customize routers.
 func customizedRegister(r *server.Hertz) {
 	r.GET("/ping", handler.Ping)
-	//r.POST("/request-a", service.RequestA)
-	//r.POST("/request-b", service.RequestB)
-	//r.POST("/request-c", service.RequestC)
-	//r.POST("/request-d", service.RequestD)
 	// your code ...
 }

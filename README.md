@@ -30,3 +30,11 @@ go run .
 ``` bash
 go run .
 ```
+
+## Send Request
+```typescript
+interface Request{
+    svrName: string
+    bizParams: string // 后续会使用map
+}
+```

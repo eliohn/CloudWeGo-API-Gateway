@@ -4,12 +4,12 @@ import (
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/server"
 	etcd "github.com/kitex-contrib/registry-etcd"
-	service "kitexSvr-serviceA/kitex_gen/kitex/service/aservice"
+	service "kitexSvr-serviceA/kitex_gen/kitex/service/hertzsvr"
 	"log"
 	"net"
 )
 
-func InitEtcdRegistry(s *AServiceImpl, serviceName string, addr *net.TCPAddr) server.Server {
+func InitEtcdRegistry(s *HertzSvrImpl, serviceName string, addr *net.TCPAddr) server.Server {
 	r, err := etcd.NewEtcdRegistry([]string{"localhost:2379"})
 	if err != nil {
 		log.Fatal("Error: fail to new etcd registry---" + err.Error())
@@ -27,8 +27,9 @@ func InitEtcdRegistry(s *AServiceImpl, serviceName string, addr *net.TCPAddr) se
 
 func main() {
 	addr, _ := net.ResolveTCPAddr("tcp", ":9990")
-	s := new(AServiceImpl)
+	s := new(HertzSvrImpl)
 
+	// 初始化etcd
 	svr := InitEtcdRegistry(s, "AService", addr)
 	err := svr.Run()
 

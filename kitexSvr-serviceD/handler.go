@@ -6,14 +6,14 @@ import (
 	"log"
 )
 
-// DServiceImpl implements the last service interface defined in the IDL.
-type DServiceImpl struct{}
+// HertzSvrImpl implements the last service interface defined in the IDL.
+type HertzSvrImpl struct{}
 
-// RequestD implements the DServiceImpl interface.
-func (s *DServiceImpl) RequestD(ctx context.Context, req *service.DReq) (resp *service.DResp, err error) {
+// Request implements the HertzSvrImpl interface.
+func (s *HertzSvrImpl) Request(ctx context.Context, request *service.SvrRequest) (resp *service.SvrResponse, err error) {
 	// TODO: Your code here...
-	log.Println("Server D receive request: " + req.Data)
-	resp = &service.DResp{
+	log.Println("Server D receive request: " + request.BizParams)
+	resp = &service.SvrResponse{
 		Success: true,
 		Message: "D success",
 	}

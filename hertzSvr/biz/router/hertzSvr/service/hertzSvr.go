@@ -17,9 +17,6 @@ import (
 func Register(r *server.Hertz) {
 
 	root := r.Group("/", rootMw()...)
-	root.POST("/A-req", append(_requestaMw(), service.RequestA)...)
-	root.POST("/B-req", append(_requestbMw(), service.RequestB)...)
-	root.POST("/C-req", append(_requestcMw(), service.RequestC)...)
-	root.POST("/D-req", append(_requestdMw(), service.RequestD)...)
-	root.GET("/update", append(_updateMw(), service.Update)...)
+	root.POST("/registerIDL", append(_registeridlMw(), service.RegisterIDL)...)
+	root.POST("/request", append(_requestMw(), service.Request)...)
 }

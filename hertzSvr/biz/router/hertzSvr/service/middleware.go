@@ -55,3 +55,23 @@ func _requestdMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _registeridlMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _requestMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _gatewayMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _svcMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

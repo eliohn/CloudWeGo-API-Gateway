@@ -14,6 +14,7 @@ import (
 	"log"
 )
 
+// NewResolver 获取注册中心的resolver
 func NewResolver() discovery.Resolver {
 	r, err := etcd.NewEtcdResolver([]string{"localhost:2379"})
 	if err != nil {
@@ -22,6 +23,8 @@ func NewResolver() discovery.Resolver {
 	return r
 }
 
+// NewProvider 获取provider
+// content 为热加载idl的内容
 func NewProvider(content string) *generic.ThriftContentProvider {
 	p, err := generic.NewThriftContentProvider(content, map[string]string{})
 	if err != nil {
@@ -30,11 +33,13 @@ func NewProvider(content string) *generic.ThriftContentProvider {
 	return p
 }
 
+// NewClient 获取泛化调用的client
 func NewClient(destServiceName string, provider *generic.ThriftContentProvider, resolver discovery.Resolver) genericclient.Client {
 	g, err := generic.HTTPThriftGeneric(provider)
 	if err != nil {
 		panic("Error: fail to generic thrift " + err.Error())
 	}
+	// 对client的设置
 	var opts []client.Option
 	opts = append(opts, client.WithResolver(resolver))
 	opts = append(opts, client.WithLongConnection(connpool.IdleConfig{
@@ -50,6 +55,7 @@ func NewClient(destServiceName string, provider *generic.ThriftContentProvider, 
 	return cli
 }
 
+// GetHTTPGenericResponse 获取http泛化调用后的response
 func GetHTTPGenericResponse(ctx context.Context, c *app.RequestContext, methodName string, cli genericclient.Client) *generic.HTTPResponse {
 	httpReq, err := adaptor.GetCompatRequest(c.GetRequest())
 	customReq, err := generic.FromHTTPRequest(httpReq)
