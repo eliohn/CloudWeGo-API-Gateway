@@ -2,51 +2,89 @@ package service
 
 import (
 	"github.com/cloudwego/kitex/client/genericclient"
+	"github.com/cloudwego/kitex/pkg/generic"
 	"hertzSvr/biz/handler/hertzSvr/utils"
 )
 
 type ClientInfo struct {
-	name string
-	cli  genericclient.Client
+	provider *generic.ThriftContentProvider
+	cli      genericclient.Client
 }
 
-var idlContent = `
+var idlContentA = `
 namespace go kitex.service
 
-struct SvrRequest{
-    1: string svrName (api.body="svrName")
-    2: string bizParams (api.body="bizParams") //应该是JSON，用string代替
+struct Request{
+    1: i32 operand_1 (api.body="operand_1")
+    2: i32 operand_2 (api.body="operand_2")
 }
 
-struct RegisterIDL{
-    1: string name (api.body="name")
-    2: string version(api.body="version")
-    3: string idl (api.body="idl")
-}
-
-struct SvrResponse{
+struct Response{
     1: bool success (api.body="success")
     2: string message (api.body="message") //应该是JSON，用string代替
+    3: i32 data (api.body="data")
 }
 
 service HertzSvr{
-    SvrResponse Request(1: SvrRequest request)(api.post="/request")
-    SvrResponse RegisterIDL(1: RegisterIDL idl)(api.post="/registerIDL")
+    Response Add(1: Request request)(api.post="/gateway/AService/add")
+    Response Sub(1: Request request)(api.post="/gateway/AService/sub")
+}`
+var idlContentB = `namespace go kitex.service
+
+struct Request{
+    1: i32 operand_1 (api.body="operand_1")
+    2: i32 operand_2 (api.body="operand_2")
 }
-`
+
+struct Response{
+    1: bool success (api.body="success")
+    2: string message (api.body="message") //应该是JSON，用string代替
+    3: i32 data (api.body="data")
+}
+
+service HertzSvr{
+    Response Mul(1: Request request)(api.post="/gateway/BService/mul")
+    Response Div(1: Request request)(api.post="/gateway/BService/div")
+}`
+var idlContentC = `namespace go kitex.service
+
+struct Request{
+    1: i32 operand (api.body="operand")
+}
+
+struct Response{
+    1: bool success (api.body="success")
+    2: string message (api.body="message") //应该是JSON，用string代替
+    3: i32 data (api.body="data")
+}
+
+service HertzSvr{
+    Response Fact(1: Request request)(api.post="/gateway/CService/fact")
+    Response Fib(1: Request request)(api.post="/gateway/CService/fib")
+}`
 
 // 初始化etcdresolver
 var resolver = utils.NewResolver()
 
-// 初始化四个服务对应的client（后续会用缓存层优化）
-var cliA = utils.NewClient("AService", utils.NewProvider(idlContent), resolver)
-var cliB = utils.NewClient("BService", utils.NewProvider(idlContent), resolver)
-var cliC = utils.NewClient("CService", utils.NewProvider(idlContent), resolver)
-var cliD = utils.NewClient("DService", utils.NewProvider(idlContent), resolver)
+// 初始化三个服务对应的provider
+var providerA = utils.NewProvider(idlContentA)
+var providerB = utils.NewProvider(idlContentB)
+var providerC = utils.NewProvider(idlContentC)
 
-var clients = map[string]genericclient.Client{
-	"AService": cliA,
-	"BService": cliB,
-	"CService": cliC,
-	"DService": cliD,
+// 初始化clientInfo
+var clients = map[string]ClientInfo{
+	"AService": {
+		provider: providerA,
+		cli:      utils.NewClient("AService", providerA, resolver),
+	},
+
+	"BService": {
+		provider: providerB,
+		cli:      utils.NewClient("BService", providerB, resolver),
+	},
+
+	"CService": {
+		provider: providerC,
+		cli:      utils.NewClient("CService", providerC, resolver),
+	},
 }

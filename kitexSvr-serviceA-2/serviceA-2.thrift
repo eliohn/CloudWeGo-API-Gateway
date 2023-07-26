@@ -1,7 +1,8 @@
 namespace go kitex.service
 
 struct Request{
-    1: i32 operand (api.body="operand")
+    1: i32 operand_1 (api.body="operand_1")
+    2: i32 operand_2 (api.body="operand_2")
 }
 
 struct Response{
@@ -11,6 +12,6 @@ struct Response{
 }
 
 service HertzSvr{
-    Response Fact(1: Request request)(api.post="/gateway/CService/fact")
-    Response Fib(1: Request request)(api.post="/gateway/CService/fib")
+    Response Add(1: Request request)(api.post="/gateway/AService/add")
+    Response Sub(1: Request request)(api.post="/gateway/AService/sub")
 }

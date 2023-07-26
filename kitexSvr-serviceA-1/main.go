@@ -4,7 +4,7 @@ import (
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/server"
 	etcd "github.com/kitex-contrib/registry-etcd"
-	service "kitexSvr-serviceD/kitex_gen/kitex/service/hertzsvr"
+	service "kitexSvr-serviceA-1/kitex_gen/kitex/service/hertzsvr"
 	"log"
 	"net"
 )
@@ -26,9 +26,10 @@ func InitEtcdRegistry(s *HertzSvrImpl, serviceName string, addr *net.TCPAddr) se
 }
 
 func main() {
-	addr, _ := net.ResolveTCPAddr("tcp", ":9993")
+	addr, _ := net.ResolveTCPAddr("tcp", ":9990")
 	s := new(HertzSvrImpl)
 
+	// 初始化etcd
 	svr := InitEtcdRegistry(s, "AService", addr)
 	err := svr.Run()
 

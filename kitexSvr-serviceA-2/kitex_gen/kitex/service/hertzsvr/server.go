@@ -3,7 +3,7 @@ package hertzsvr
 
 import (
 	server "github.com/cloudwego/kitex/server"
-	service "kitexSvr-serviceA/kitex_gen/kitex/service"
+	service "kitexSvr-serviceA-2/kitex_gen/kitex/service"
 )
 
 // NewServer creates a server.Server with the given handler and options.

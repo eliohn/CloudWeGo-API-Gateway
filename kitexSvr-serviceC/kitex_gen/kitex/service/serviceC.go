@@ -9,39 +9,30 @@ import (
 	"strings"
 )
 
-type SvrRequest struct {
-	SvrName   string `thrift:"svrName,1" frugal:"1,default,string" json:"svrName"`
-	BizParams string `thrift:"bizParams,2" frugal:"2,default,string" json:"bizParams"`
+type Request struct {
+	Operand int32 `thrift:"operand,1" frugal:"1,default,i32" json:"operand"`
 }
 
-func NewSvrRequest() *SvrRequest {
-	return &SvrRequest{}
+func NewRequest() *Request {
+	return &Request{}
 }
 
-func (p *SvrRequest) InitDefault() {
-	*p = SvrRequest{}
+func (p *Request) InitDefault() {
+	*p = Request{}
 }
 
-func (p *SvrRequest) GetSvrName() (v string) {
-	return p.SvrName
+func (p *Request) GetOperand() (v int32) {
+	return p.Operand
+}
+func (p *Request) SetOperand(val int32) {
+	p.Operand = val
 }
 
-func (p *SvrRequest) GetBizParams() (v string) {
-	return p.BizParams
-}
-func (p *SvrRequest) SetSvrName(val string) {
-	p.SvrName = val
-}
-func (p *SvrRequest) SetBizParams(val string) {
-	p.BizParams = val
+var fieldIDToName_Request = map[int16]string{
+	1: "operand",
 }
 
-var fieldIDToName_SvrRequest = map[int16]string{
-	1: "svrName",
-	2: "bizParams",
-}
-
-func (p *SvrRequest) Read(iprot thrift.TProtocol) (err error) {
+func (p *Request) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -61,18 +52,8 @@ func (p *SvrRequest) Read(iprot thrift.TProtocol) (err error) {
 
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I32 {
 				if err = p.ReadField1(iprot); err != nil {
-					goto ReadFieldError
-				}
-			} else {
-				if err = iprot.Skip(fieldTypeId); err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else {
@@ -100,7 +81,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_SvrRequest[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_Request[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -110,36 +91,23 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *SvrRequest) ReadField1(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
+func (p *Request) ReadField1(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
-		p.SvrName = v
+		p.Operand = v
 	}
 	return nil
 }
 
-func (p *SvrRequest) ReadField2(iprot thrift.TProtocol) error {
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		p.BizParams = v
-	}
-	return nil
-}
-
-func (p *SvrRequest) Write(oprot thrift.TProtocol) (err error) {
+func (p *Request) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("SvrRequest"); err != nil {
+	if err = oprot.WriteStructBegin("Request"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
 		if err = p.writeField1(oprot); err != nil {
 			fieldId = 1
-			goto WriteFieldError
-		}
-		if err = p.writeField2(oprot); err != nil {
-			fieldId = 2
 			goto WriteFieldError
 		}
 
@@ -161,11 +129,11 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *SvrRequest) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("svrName", thrift.STRING, 1); err != nil {
+func (p *Request) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("operand", thrift.I32, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.SvrName); err != nil {
+	if err := oprot.WriteI32(p.Operand); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -178,93 +146,75 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *SvrRequest) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("bizParams", thrift.STRING, 2); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.BizParams); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
-}
-
-func (p *SvrRequest) String() string {
+func (p *Request) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("SvrRequest(%+v)", *p)
+	return fmt.Sprintf("Request(%+v)", *p)
 }
 
-func (p *SvrRequest) DeepEqual(ano *SvrRequest) bool {
+func (p *Request) DeepEqual(ano *Request) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
 		return false
 	}
-	if !p.Field1DeepEqual(ano.SvrName) {
-		return false
-	}
-	if !p.Field2DeepEqual(ano.BizParams) {
+	if !p.Field1DeepEqual(ano.Operand) {
 		return false
 	}
 	return true
 }
 
-func (p *SvrRequest) Field1DeepEqual(src string) bool {
+func (p *Request) Field1DeepEqual(src int32) bool {
 
-	if strings.Compare(p.SvrName, src) != 0 {
-		return false
-	}
-	return true
-}
-func (p *SvrRequest) Field2DeepEqual(src string) bool {
-
-	if strings.Compare(p.BizParams, src) != 0 {
+	if p.Operand != src {
 		return false
 	}
 	return true
 }
 
-type SvrResponse struct {
+type Response struct {
 	Success bool   `thrift:"success,1" frugal:"1,default,bool" json:"success"`
 	Message string `thrift:"message,2" frugal:"2,default,string" json:"message"`
+	Data    int32  `thrift:"data,3" frugal:"3,default,i32" json:"data"`
 }
 
-func NewSvrResponse() *SvrResponse {
-	return &SvrResponse{}
+func NewResponse() *Response {
+	return &Response{}
 }
 
-func (p *SvrResponse) InitDefault() {
-	*p = SvrResponse{}
+func (p *Response) InitDefault() {
+	*p = Response{}
 }
 
-func (p *SvrResponse) GetSuccess() (v bool) {
+func (p *Response) GetSuccess() (v bool) {
 	return p.Success
 }
 
-func (p *SvrResponse) GetMessage() (v string) {
+func (p *Response) GetMessage() (v string) {
 	return p.Message
 }
-func (p *SvrResponse) SetSuccess(val bool) {
+
+func (p *Response) GetData() (v int32) {
+	return p.Data
+}
+func (p *Response) SetSuccess(val bool) {
 	p.Success = val
 }
-func (p *SvrResponse) SetMessage(val string) {
+func (p *Response) SetMessage(val string) {
 	p.Message = val
 }
-
-var fieldIDToName_SvrResponse = map[int16]string{
-	1: "success",
-	2: "message",
+func (p *Response) SetData(val int32) {
+	p.Data = val
 }
 
-func (p *SvrResponse) Read(iprot thrift.TProtocol) (err error) {
+var fieldIDToName_Response = map[int16]string{
+	1: "success",
+	2: "message",
+	3: "data",
+}
+
+func (p *Response) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -303,6 +253,16 @@ func (p *SvrResponse) Read(iprot thrift.TProtocol) (err error) {
 					goto SkipFieldError
 				}
 			}
+		case 3:
+			if fieldTypeId == thrift.I32 {
+				if err = p.ReadField3(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				if err = iprot.Skip(fieldTypeId); err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
@@ -323,7 +283,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_SvrResponse[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_Response[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -333,7 +293,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *SvrResponse) ReadField1(iprot thrift.TProtocol) error {
+func (p *Response) ReadField1(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadBool(); err != nil {
 		return err
 	} else {
@@ -342,7 +302,7 @@ func (p *SvrResponse) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SvrResponse) ReadField2(iprot thrift.TProtocol) error {
+func (p *Response) ReadField2(iprot thrift.TProtocol) error {
 	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
@@ -351,9 +311,18 @@ func (p *SvrResponse) ReadField2(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *SvrResponse) Write(oprot thrift.TProtocol) (err error) {
+func (p *Response) ReadField3(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI32(); err != nil {
+		return err
+	} else {
+		p.Data = v
+	}
+	return nil
+}
+
+func (p *Response) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("SvrResponse"); err != nil {
+	if err = oprot.WriteStructBegin("Response"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -363,6 +332,10 @@ func (p *SvrResponse) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField2(oprot); err != nil {
 			fieldId = 2
+			goto WriteFieldError
+		}
+		if err = p.writeField3(oprot); err != nil {
+			fieldId = 3
 			goto WriteFieldError
 		}
 
@@ -384,7 +357,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *SvrResponse) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *Response) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("success", thrift.BOOL, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -401,7 +374,7 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *SvrResponse) writeField2(oprot thrift.TProtocol) (err error) {
+func (p *Response) writeField2(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("message", thrift.STRING, 2); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -418,14 +391,31 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
-func (p *SvrResponse) String() string {
+func (p *Response) writeField3(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("data", thrift.I32, 3); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteI32(p.Data); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
+}
+
+func (p *Response) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("SvrResponse(%+v)", *p)
+	return fmt.Sprintf("Response(%+v)", *p)
 }
 
-func (p *SvrResponse) DeepEqual(ano *SvrResponse) bool {
+func (p *Response) DeepEqual(ano *Response) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
@@ -437,26 +427,38 @@ func (p *SvrResponse) DeepEqual(ano *SvrResponse) bool {
 	if !p.Field2DeepEqual(ano.Message) {
 		return false
 	}
+	if !p.Field3DeepEqual(ano.Data) {
+		return false
+	}
 	return true
 }
 
-func (p *SvrResponse) Field1DeepEqual(src bool) bool {
+func (p *Response) Field1DeepEqual(src bool) bool {
 
 	if p.Success != src {
 		return false
 	}
 	return true
 }
-func (p *SvrResponse) Field2DeepEqual(src string) bool {
+func (p *Response) Field2DeepEqual(src string) bool {
 
 	if strings.Compare(p.Message, src) != 0 {
 		return false
 	}
 	return true
 }
+func (p *Response) Field3DeepEqual(src int32) bool {
+
+	if p.Data != src {
+		return false
+	}
+	return true
+}
 
 type HertzSvr interface {
-	Request(ctx context.Context, request *SvrRequest) (r *SvrResponse, err error)
+	Fact(ctx context.Context, request *Request) (r *Response, err error)
+
+	Fib(ctx context.Context, request *Request) (r *Response, err error)
 }
 
 type HertzSvrClient struct {
@@ -485,11 +487,20 @@ func (p *HertzSvrClient) Client_() thrift.TClient {
 	return p.c
 }
 
-func (p *HertzSvrClient) Request(ctx context.Context, request *SvrRequest) (r *SvrResponse, err error) {
-	var _args HertzSvrRequestArgs
+func (p *HertzSvrClient) Fact(ctx context.Context, request *Request) (r *Response, err error) {
+	var _args HertzSvrFactArgs
 	_args.Request = request
-	var _result HertzSvrRequestResult
-	if err = p.Client_().Call(ctx, "Request", &_args, &_result); err != nil {
+	var _result HertzSvrFactResult
+	if err = p.Client_().Call(ctx, "Fact", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+func (p *HertzSvrClient) Fib(ctx context.Context, request *Request) (r *Response, err error) {
+	var _args HertzSvrFibArgs
+	_args.Request = request
+	var _result HertzSvrFibResult
+	if err = p.Client_().Call(ctx, "Fib", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
@@ -515,7 +526,8 @@ func (p *HertzSvrProcessor) ProcessorMap() map[string]thrift.TProcessorFunction 
 
 func NewHertzSvrProcessor(handler HertzSvr) *HertzSvrProcessor {
 	self := &HertzSvrProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self.AddToProcessorMap("Request", &hertzSvrProcessorRequest{handler: handler})
+	self.AddToProcessorMap("Fact", &hertzSvrProcessorFact{handler: handler})
+	self.AddToProcessorMap("Fib", &hertzSvrProcessorFib{handler: handler})
 	return self
 }
 func (p *HertzSvrProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -536,16 +548,16 @@ func (p *HertzSvrProcessor) Process(ctx context.Context, iprot, oprot thrift.TPr
 	return false, x
 }
 
-type hertzSvrProcessorRequest struct {
+type hertzSvrProcessorFact struct {
 	handler HertzSvr
 }
 
-func (p *hertzSvrProcessorRequest) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := HertzSvrRequestArgs{}
+func (p *hertzSvrProcessorFact) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := HertzSvrFactArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
-		oprot.WriteMessageBegin("Request", thrift.EXCEPTION, seqId)
+		oprot.WriteMessageBegin("Fact", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -554,11 +566,11 @@ func (p *hertzSvrProcessorRequest) Process(ctx context.Context, seqId int32, ipr
 
 	iprot.ReadMessageEnd()
 	var err2 error
-	result := HertzSvrRequestResult{}
-	var retval *SvrResponse
-	if retval, err2 = p.handler.Request(ctx, args.Request); err2 != nil {
-		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing Request: "+err2.Error())
-		oprot.WriteMessageBegin("Request", thrift.EXCEPTION, seqId)
+	result := HertzSvrFactResult{}
+	var retval *Response
+	if retval, err2 = p.handler.Fact(ctx, args.Request); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing Fact: "+err2.Error())
+		oprot.WriteMessageBegin("Fact", thrift.EXCEPTION, seqId)
 		x.Write(oprot)
 		oprot.WriteMessageEnd()
 		oprot.Flush(ctx)
@@ -566,7 +578,7 @@ func (p *hertzSvrProcessorRequest) Process(ctx context.Context, seqId int32, ipr
 	} else {
 		result.Success = retval
 	}
-	if err2 = oprot.WriteMessageBegin("Request", thrift.REPLY, seqId); err2 != nil {
+	if err2 = oprot.WriteMessageBegin("Fact", thrift.REPLY, seqId); err2 != nil {
 		err = err2
 	}
 	if err2 = result.Write(oprot); err == nil && err2 != nil {
@@ -584,39 +596,87 @@ func (p *hertzSvrProcessorRequest) Process(ctx context.Context, seqId int32, ipr
 	return true, err
 }
 
-type HertzSvrRequestArgs struct {
-	Request *SvrRequest `thrift:"request,1" frugal:"1,default,SvrRequest" json:"request"`
+type hertzSvrProcessorFib struct {
+	handler HertzSvr
 }
 
-func NewHertzSvrRequestArgs() *HertzSvrRequestArgs {
-	return &HertzSvrRequestArgs{}
+func (p *hertzSvrProcessorFib) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := HertzSvrFibArgs{}
+	if err = args.Read(iprot); err != nil {
+		iprot.ReadMessageEnd()
+		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
+		oprot.WriteMessageBegin("Fib", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return false, err
+	}
+
+	iprot.ReadMessageEnd()
+	var err2 error
+	result := HertzSvrFibResult{}
+	var retval *Response
+	if retval, err2 = p.handler.Fib(ctx, args.Request); err2 != nil {
+		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing Fib: "+err2.Error())
+		oprot.WriteMessageBegin("Fib", thrift.EXCEPTION, seqId)
+		x.Write(oprot)
+		oprot.WriteMessageEnd()
+		oprot.Flush(ctx)
+		return true, err2
+	} else {
+		result.Success = retval
+	}
+	if err2 = oprot.WriteMessageBegin("Fib", thrift.REPLY, seqId); err2 != nil {
+		err = err2
+	}
+	if err2 = result.Write(oprot); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.WriteMessageEnd(); err == nil && err2 != nil {
+		err = err2
+	}
+	if err2 = oprot.Flush(ctx); err == nil && err2 != nil {
+		err = err2
+	}
+	if err != nil {
+		return
+	}
+	return true, err
 }
 
-func (p *HertzSvrRequestArgs) InitDefault() {
-	*p = HertzSvrRequestArgs{}
+type HertzSvrFactArgs struct {
+	Request *Request `thrift:"request,1" frugal:"1,default,Request" json:"request"`
 }
 
-var HertzSvrRequestArgs_Request_DEFAULT *SvrRequest
+func NewHertzSvrFactArgs() *HertzSvrFactArgs {
+	return &HertzSvrFactArgs{}
+}
 
-func (p *HertzSvrRequestArgs) GetRequest() (v *SvrRequest) {
+func (p *HertzSvrFactArgs) InitDefault() {
+	*p = HertzSvrFactArgs{}
+}
+
+var HertzSvrFactArgs_Request_DEFAULT *Request
+
+func (p *HertzSvrFactArgs) GetRequest() (v *Request) {
 	if !p.IsSetRequest() {
-		return HertzSvrRequestArgs_Request_DEFAULT
+		return HertzSvrFactArgs_Request_DEFAULT
 	}
 	return p.Request
 }
-func (p *HertzSvrRequestArgs) SetRequest(val *SvrRequest) {
+func (p *HertzSvrFactArgs) SetRequest(val *Request) {
 	p.Request = val
 }
 
-var fieldIDToName_HertzSvrRequestArgs = map[int16]string{
+var fieldIDToName_HertzSvrFactArgs = map[int16]string{
 	1: "request",
 }
 
-func (p *HertzSvrRequestArgs) IsSetRequest() bool {
+func (p *HertzSvrFactArgs) IsSetRequest() bool {
 	return p.Request != nil
 }
 
-func (p *HertzSvrRequestArgs) Read(iprot thrift.TProtocol) (err error) {
+func (p *HertzSvrFactArgs) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -665,7 +725,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_HertzSvrRequestArgs[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_HertzSvrFactArgs[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -675,17 +735,17 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *HertzSvrRequestArgs) ReadField1(iprot thrift.TProtocol) error {
-	p.Request = NewSvrRequest()
+func (p *HertzSvrFactArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Request = NewRequest()
 	if err := p.Request.Read(iprot); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (p *HertzSvrRequestArgs) Write(oprot thrift.TProtocol) (err error) {
+func (p *HertzSvrFactArgs) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("Request_args"); err != nil {
+	if err = oprot.WriteStructBegin("Fact_args"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -712,7 +772,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *HertzSvrRequestArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *HertzSvrFactArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("request", thrift.STRUCT, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -729,14 +789,14 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *HertzSvrRequestArgs) String() string {
+func (p *HertzSvrFactArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("HertzSvrRequestArgs(%+v)", *p)
+	return fmt.Sprintf("HertzSvrFactArgs(%+v)", *p)
 }
 
-func (p *HertzSvrRequestArgs) DeepEqual(ano *HertzSvrRequestArgs) bool {
+func (p *HertzSvrFactArgs) DeepEqual(ano *HertzSvrFactArgs) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
@@ -748,7 +808,7 @@ func (p *HertzSvrRequestArgs) DeepEqual(ano *HertzSvrRequestArgs) bool {
 	return true
 }
 
-func (p *HertzSvrRequestArgs) Field1DeepEqual(src *SvrRequest) bool {
+func (p *HertzSvrFactArgs) Field1DeepEqual(src *Request) bool {
 
 	if !p.Request.DeepEqual(src) {
 		return false
@@ -756,39 +816,39 @@ func (p *HertzSvrRequestArgs) Field1DeepEqual(src *SvrRequest) bool {
 	return true
 }
 
-type HertzSvrRequestResult struct {
-	Success *SvrResponse `thrift:"success,0,optional" frugal:"0,optional,SvrResponse" json:"success,omitempty"`
+type HertzSvrFactResult struct {
+	Success *Response `thrift:"success,0,optional" frugal:"0,optional,Response" json:"success,omitempty"`
 }
 
-func NewHertzSvrRequestResult() *HertzSvrRequestResult {
-	return &HertzSvrRequestResult{}
+func NewHertzSvrFactResult() *HertzSvrFactResult {
+	return &HertzSvrFactResult{}
 }
 
-func (p *HertzSvrRequestResult) InitDefault() {
-	*p = HertzSvrRequestResult{}
+func (p *HertzSvrFactResult) InitDefault() {
+	*p = HertzSvrFactResult{}
 }
 
-var HertzSvrRequestResult_Success_DEFAULT *SvrResponse
+var HertzSvrFactResult_Success_DEFAULT *Response
 
-func (p *HertzSvrRequestResult) GetSuccess() (v *SvrResponse) {
+func (p *HertzSvrFactResult) GetSuccess() (v *Response) {
 	if !p.IsSetSuccess() {
-		return HertzSvrRequestResult_Success_DEFAULT
+		return HertzSvrFactResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *HertzSvrRequestResult) SetSuccess(x interface{}) {
-	p.Success = x.(*SvrResponse)
+func (p *HertzSvrFactResult) SetSuccess(x interface{}) {
+	p.Success = x.(*Response)
 }
 
-var fieldIDToName_HertzSvrRequestResult = map[int16]string{
+var fieldIDToName_HertzSvrFactResult = map[int16]string{
 	0: "success",
 }
 
-func (p *HertzSvrRequestResult) IsSetSuccess() bool {
+func (p *HertzSvrFactResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *HertzSvrRequestResult) Read(iprot thrift.TProtocol) (err error) {
+func (p *HertzSvrFactResult) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -837,7 +897,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_HertzSvrRequestResult[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_HertzSvrFactResult[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -847,17 +907,17 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *HertzSvrRequestResult) ReadField0(iprot thrift.TProtocol) error {
-	p.Success = NewSvrResponse()
+func (p *HertzSvrFactResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = NewResponse()
 	if err := p.Success.Read(iprot); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (p *HertzSvrRequestResult) Write(oprot thrift.TProtocol) (err error) {
+func (p *HertzSvrFactResult) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
-	if err = oprot.WriteStructBegin("Request_result"); err != nil {
+	if err = oprot.WriteStructBegin("Fact_result"); err != nil {
 		goto WriteStructBeginError
 	}
 	if p != nil {
@@ -884,7 +944,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *HertzSvrRequestResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *HertzSvrFactResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			goto WriteFieldBeginError
@@ -903,14 +963,14 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
 }
 
-func (p *HertzSvrRequestResult) String() string {
+func (p *HertzSvrFactResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("HertzSvrRequestResult(%+v)", *p)
+	return fmt.Sprintf("HertzSvrFactResult(%+v)", *p)
 }
 
-func (p *HertzSvrRequestResult) DeepEqual(ano *HertzSvrRequestResult) bool {
+func (p *HertzSvrFactResult) DeepEqual(ano *HertzSvrFactResult) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
@@ -922,7 +982,353 @@ func (p *HertzSvrRequestResult) DeepEqual(ano *HertzSvrRequestResult) bool {
 	return true
 }
 
-func (p *HertzSvrRequestResult) Field0DeepEqual(src *SvrResponse) bool {
+func (p *HertzSvrFactResult) Field0DeepEqual(src *Response) bool {
+
+	if !p.Success.DeepEqual(src) {
+		return false
+	}
+	return true
+}
+
+type HertzSvrFibArgs struct {
+	Request *Request `thrift:"request,1" frugal:"1,default,Request" json:"request"`
+}
+
+func NewHertzSvrFibArgs() *HertzSvrFibArgs {
+	return &HertzSvrFibArgs{}
+}
+
+func (p *HertzSvrFibArgs) InitDefault() {
+	*p = HertzSvrFibArgs{}
+}
+
+var HertzSvrFibArgs_Request_DEFAULT *Request
+
+func (p *HertzSvrFibArgs) GetRequest() (v *Request) {
+	if !p.IsSetRequest() {
+		return HertzSvrFibArgs_Request_DEFAULT
+	}
+	return p.Request
+}
+func (p *HertzSvrFibArgs) SetRequest(val *Request) {
+	p.Request = val
+}
+
+var fieldIDToName_HertzSvrFibArgs = map[int16]string{
+	1: "request",
+}
+
+func (p *HertzSvrFibArgs) IsSetRequest() bool {
+	return p.Request != nil
+}
+
+func (p *HertzSvrFibArgs) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				if err = iprot.Skip(fieldTypeId); err != nil {
+					goto SkipFieldError
+				}
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_HertzSvrFibArgs[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *HertzSvrFibArgs) ReadField1(iprot thrift.TProtocol) error {
+	p.Request = NewRequest()
+	if err := p.Request.Read(iprot); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (p *HertzSvrFibArgs) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("Fib_args"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *HertzSvrFibArgs) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("request", thrift.STRUCT, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := p.Request.Write(oprot); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *HertzSvrFibArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("HertzSvrFibArgs(%+v)", *p)
+}
+
+func (p *HertzSvrFibArgs) DeepEqual(ano *HertzSvrFibArgs) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field1DeepEqual(ano.Request) {
+		return false
+	}
+	return true
+}
+
+func (p *HertzSvrFibArgs) Field1DeepEqual(src *Request) bool {
+
+	if !p.Request.DeepEqual(src) {
+		return false
+	}
+	return true
+}
+
+type HertzSvrFibResult struct {
+	Success *Response `thrift:"success,0,optional" frugal:"0,optional,Response" json:"success,omitempty"`
+}
+
+func NewHertzSvrFibResult() *HertzSvrFibResult {
+	return &HertzSvrFibResult{}
+}
+
+func (p *HertzSvrFibResult) InitDefault() {
+	*p = HertzSvrFibResult{}
+}
+
+var HertzSvrFibResult_Success_DEFAULT *Response
+
+func (p *HertzSvrFibResult) GetSuccess() (v *Response) {
+	if !p.IsSetSuccess() {
+		return HertzSvrFibResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *HertzSvrFibResult) SetSuccess(x interface{}) {
+	p.Success = x.(*Response)
+}
+
+var fieldIDToName_HertzSvrFibResult = map[int16]string{
+	0: "success",
+}
+
+func (p *HertzSvrFibResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *HertzSvrFibResult) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 0:
+			if fieldTypeId == thrift.STRUCT {
+				if err = p.ReadField0(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				if err = iprot.Skip(fieldTypeId); err != nil {
+					goto SkipFieldError
+				}
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_HertzSvrFibResult[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *HertzSvrFibResult) ReadField0(iprot thrift.TProtocol) error {
+	p.Success = NewResponse()
+	if err := p.Success.Read(iprot); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (p *HertzSvrFibResult) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("Fib_result"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField0(oprot); err != nil {
+			fieldId = 0
+			goto WriteFieldError
+		}
+
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *HertzSvrFibResult) writeField0(oprot thrift.TProtocol) (err error) {
+	if p.IsSetSuccess() {
+		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := p.Success.Write(oprot); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
+}
+
+func (p *HertzSvrFibResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("HertzSvrFibResult(%+v)", *p)
+}
+
+func (p *HertzSvrFibResult) DeepEqual(ano *HertzSvrFibResult) bool {
+	if p == ano {
+		return true
+	} else if p == nil || ano == nil {
+		return false
+	}
+	if !p.Field0DeepEqual(ano.Success) {
+		return false
+	}
+	return true
+}
+
+func (p *HertzSvrFibResult) Field0DeepEqual(src *Response) bool {
 
 	if !p.Success.DeepEqual(src) {
 		return false

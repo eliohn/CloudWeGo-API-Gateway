@@ -19,7 +19,8 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	serviceName := "HertzSvr"
 	handlerType := (*service.HertzSvr)(nil)
 	methods := map[string]kitex.MethodInfo{
-		"Request": kitex.NewMethodInfo(requestHandler, newHertzSvrRequestArgs, newHertzSvrRequestResult, false),
+		"Fact": kitex.NewMethodInfo(factHandler, newHertzSvrFactArgs, newHertzSvrFactResult, false),
+		"Fib":  kitex.NewMethodInfo(fibHandler, newHertzSvrFibArgs, newHertzSvrFibResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName": "service",
@@ -35,22 +36,40 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	return svcInfo
 }
 
-func requestHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*service.HertzSvrRequestArgs)
-	realResult := result.(*service.HertzSvrRequestResult)
-	success, err := handler.(service.HertzSvr).Request(ctx, realArg.Request)
+func factHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*service.HertzSvrFactArgs)
+	realResult := result.(*service.HertzSvrFactResult)
+	success, err := handler.(service.HertzSvr).Fact(ctx, realArg.Request)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newHertzSvrRequestArgs() interface{} {
-	return service.NewHertzSvrRequestArgs()
+func newHertzSvrFactArgs() interface{} {
+	return service.NewHertzSvrFactArgs()
 }
 
-func newHertzSvrRequestResult() interface{} {
-	return service.NewHertzSvrRequestResult()
+func newHertzSvrFactResult() interface{} {
+	return service.NewHertzSvrFactResult()
+}
+
+func fibHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*service.HertzSvrFibArgs)
+	realResult := result.(*service.HertzSvrFibResult)
+	success, err := handler.(service.HertzSvr).Fib(ctx, realArg.Request)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newHertzSvrFibArgs() interface{} {
+	return service.NewHertzSvrFibArgs()
+}
+
+func newHertzSvrFibResult() interface{} {
+	return service.NewHertzSvrFibResult()
 }
 
 type kClient struct {
@@ -63,11 +82,21 @@ func newServiceClient(c client.Client) *kClient {
 	}
 }
 
-func (p *kClient) Request(ctx context.Context, request *service.SvrRequest) (r *service.SvrResponse, err error) {
-	var _args service.HertzSvrRequestArgs
+func (p *kClient) Fact(ctx context.Context, request *service.Request) (r *service.Response, err error) {
+	var _args service.HertzSvrFactArgs
 	_args.Request = request
-	var _result service.HertzSvrRequestResult
-	if err = p.c.Call(ctx, "Request", &_args, &_result); err != nil {
+	var _result service.HertzSvrFactResult
+	if err = p.c.Call(ctx, "Fact", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) Fib(ctx context.Context, request *service.Request) (r *service.Response, err error) {
+	var _args service.HertzSvrFibArgs
+	_args.Request = request
+	var _result service.HertzSvrFibResult
+	if err = p.c.Call(ctx, "Fib", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

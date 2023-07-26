@@ -11,7 +11,8 @@ import (
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
-	Request(ctx context.Context, request *service.SvrRequest, callOptions ...callopt.Option) (r *service.SvrResponse, err error)
+	Mul(ctx context.Context, request *service.Request, callOptions ...callopt.Option) (r *service.Response, err error)
+	Div(ctx context.Context, request *service.Request, callOptions ...callopt.Option) (r *service.Response, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -43,7 +44,12 @@ type kHertzSvrClient struct {
 	*kClient
 }
 
-func (p *kHertzSvrClient) Request(ctx context.Context, request *service.SvrRequest, callOptions ...callopt.Option) (r *service.SvrResponse, err error) {
+func (p *kHertzSvrClient) Mul(ctx context.Context, request *service.Request, callOptions ...callopt.Option) (r *service.Response, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.Request(ctx, request)
+	return p.kClient.Mul(ctx, request)
+}
+
+func (p *kHertzSvrClient) Div(ctx context.Context, request *service.Request, callOptions ...callopt.Option) (r *service.Response, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.Div(ctx, request)
 }

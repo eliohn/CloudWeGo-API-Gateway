@@ -1,4 +1,4 @@
-module kitexSvr-serviceD
+module kitexSvr-serviceA-1
 
 go 1.20
 

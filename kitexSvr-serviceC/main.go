@@ -26,7 +26,7 @@ func InitEtcdRegistry(s *HertzSvrImpl, serviceName string, addr *net.TCPAddr) se
 }
 
 func main() {
-	addr, _ := net.ResolveTCPAddr("tcp", ":9992")
+	addr, _ := net.ResolveTCPAddr("tcp", ":9993")
 	s := new(HertzSvrImpl)
 
 	svr := InitEtcdRegistry(s, "CService", addr)

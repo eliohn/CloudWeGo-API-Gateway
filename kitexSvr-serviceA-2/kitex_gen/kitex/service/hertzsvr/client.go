@@ -6,12 +6,13 @@ import (
 	"context"
 	client "github.com/cloudwego/kitex/client"
 	callopt "github.com/cloudwego/kitex/client/callopt"
-	service "kitexSvr-serviceD/kitex_gen/kitex/service"
+	service "kitexSvr-serviceA-2/kitex_gen/kitex/service"
 )
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
-	Request(ctx context.Context, request *service.SvrRequest, callOptions ...callopt.Option) (r *service.SvrResponse, err error)
+	Add(ctx context.Context, request *service.Request, callOptions ...callopt.Option) (r *service.Response, err error)
+	Sub(ctx context.Context, request *service.Request, callOptions ...callopt.Option) (r *service.Response, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -43,7 +44,12 @@ type kHertzSvrClient struct {
 	*kClient
 }
 
-func (p *kHertzSvrClient) Request(ctx context.Context, request *service.SvrRequest, callOptions ...callopt.Option) (r *service.SvrResponse, err error) {
+func (p *kHertzSvrClient) Add(ctx context.Context, request *service.Request, callOptions ...callopt.Option) (r *service.Response, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.Request(ctx, request)
+	return p.kClient.Add(ctx, request)
+}
+
+func (p *kHertzSvrClient) Sub(ctx context.Context, request *service.Request, callOptions ...callopt.Option) (r *service.Response, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.Sub(ctx, request)
 }
