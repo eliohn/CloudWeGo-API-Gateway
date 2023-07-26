@@ -22,10 +22,12 @@ func Request(ctx context.Context, c *app.RequestContext) {
 	}
 
 	// 从body中获取服务名（后续考虑通过路由层进行优化）
-	svcName := req.SvrName
-	cli := clients[svcName]
+	//svcName := req.SvrName
+	svcName := c.Param("svc")
+	//log.Println(svcName)
+	clientInfo := clients[svcName]
 
-	resp := utils.GetHTTPGenericResponse(ctx, c, "", cli)
+	resp := utils.GetHTTPGenericResponse(ctx, c, "", clientInfo.cli)
 
 	c.JSON(consts.StatusOK, resp)
 }

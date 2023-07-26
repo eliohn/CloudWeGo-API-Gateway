@@ -4,7 +4,7 @@ package hertzsvr
 
 import (
 	server "github.com/cloudwego/kitex/server"
-	service "kitexSvr-serviceD/kitex_gen/kitex/service"
+	service "kitexSvr-serviceA-1/kitex_gen/kitex/service"
 )
 
 // NewInvoker creates a server.Invoker with the given handler and options.

@@ -4,7 +4,7 @@ import (
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/server"
 	etcd "github.com/kitex-contrib/registry-etcd"
-	service "kitexSvr-serviceD/kitex_gen/kitex/service/hertzsvr"
+	service "kitexSvr-serviceA-2/kitex_gen/kitex/service/hertzsvr"
 	"log"
 	"net"
 )

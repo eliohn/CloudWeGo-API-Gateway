@@ -2,12 +2,13 @@ package service
 
 import (
 	"github.com/cloudwego/kitex/client/genericclient"
+	"github.com/cloudwego/kitex/pkg/generic"
 	"hertzSvr/biz/handler/hertzSvr/utils"
 )
 
 type ClientInfo struct {
-	name string
-	cli  genericclient.Client
+	provider *generic.ThriftContentProvider
+	cli      genericclient.Client
 }
 
 var idlContent = `
@@ -30,7 +31,7 @@ struct SvrResponse{
 }
 
 service HertzSvr{
-    SvrResponse Request(1: SvrRequest request)(api.post="/request")
+    SvrResponse Request(1: SvrRequest request)(api.post="/gateway/:svr/request")
     SvrResponse RegisterIDL(1: RegisterIDL idl)(api.post="/registerIDL")
 }
 `
@@ -38,15 +39,25 @@ service HertzSvr{
 // 初始化etcdresolver
 var resolver = utils.NewResolver()
 
-// 初始化四个服务对应的client（后续会用缓存层优化）
-var cliA = utils.NewClient("AService", utils.NewProvider(idlContent), resolver)
-var cliB = utils.NewClient("BService", utils.NewProvider(idlContent), resolver)
-var cliC = utils.NewClient("CService", utils.NewProvider(idlContent), resolver)
-var cliD = utils.NewClient("DService", utils.NewProvider(idlContent), resolver)
+// 初始化三个服务对应的provider
+var providerA = utils.NewProvider(idlContent)
+var providerB = utils.NewProvider(idlContent)
+var providerC = utils.NewProvider(idlContent)
 
-var clients = map[string]genericclient.Client{
-	"AService": cliA,
-	"BService": cliB,
-	"CService": cliC,
-	"DService": cliD,
+// 初始化clientInfo
+var clients = map[string]ClientInfo{
+	"AService": {
+		provider: providerA,
+		cli:      utils.NewClient("AService", providerA, resolver),
+	},
+
+	"BService": {
+		provider: providerB,
+		cli:      utils.NewClient("BService", providerB, resolver),
+	},
+
+	"CService": {
+		provider: providerC,
+		cli:      utils.NewClient("CService", providerC, resolver),
+	},
 }

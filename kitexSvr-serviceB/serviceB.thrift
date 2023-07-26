@@ -11,5 +11,5 @@ struct SvrResponse{
 }
 
 service HertzSvr{
-    SvrResponse Request(1: SvrRequest request)(api.post="/request")
+    SvrResponse Request(1: SvrRequest request)(api.post="/gateway/BService/request")
 }

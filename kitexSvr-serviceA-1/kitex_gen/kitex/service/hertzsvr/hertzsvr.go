@@ -6,7 +6,7 @@ import (
 	"context"
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
-	service "kitexSvr-serviceA/kitex_gen/kitex/service"
+	service "kitexSvr-serviceA-1/kitex_gen/kitex/service"
 )
 
 func serviceInfo() *kitex.ServiceInfo {

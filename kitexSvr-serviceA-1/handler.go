@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	service "kitexSvr-serviceA/kitex_gen/kitex/service"
+	service "kitexSvr-serviceA-1/kitex_gen/kitex/service"
 	"log"
 )
 
