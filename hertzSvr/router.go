@@ -11,6 +11,6 @@ import (
 // customizeRegister registers customize routers.
 func customizedRegister(r *server.Hertz) {
 	r.GET("/ping", handler.Ping)
-	r.POST("/gateway/:svc/request", service.Request)
+	r.POST("/gateway/:svc/:method", service.Gateway)
 	// your code ...
 }

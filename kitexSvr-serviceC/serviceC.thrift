@@ -1,15 +1,16 @@
 namespace go kitex.service
 
-struct SvrRequest{
-    1: string svrName (api.body="svrName")
-    2: string bizParams (api.body="bizParams") //应该是JSON，用string代替
+struct Request{
+    1: i32 operand (api.body="operand")
 }
 
-struct SvrResponse{
+struct Response{
     1: bool success (api.body="success")
     2: string message (api.body="message") //应该是JSON，用string代替
+    3: i32 data (api.body="data")
 }
 
 service HertzSvr{
-    SvrResponse Request(1: SvrRequest request)(api.post="/gateway/CService/request")
+    Response Fact(1: Request request)(api.post="/gateway/CService/fact")
+    Response Fib(1: Request request)(api.post="/gateway/CService/fib")
 }

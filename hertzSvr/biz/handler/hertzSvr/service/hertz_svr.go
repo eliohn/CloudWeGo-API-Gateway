@@ -6,7 +6,6 @@ import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
-	"hertzSvr/biz/handler/hertzSvr/utils"
 	"hertzSvr/biz/model/hertzSvr/service"
 )
 
@@ -21,13 +20,7 @@ func Request(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	// 从body中获取服务名（后续考虑通过路由层进行优化）
-	//svcName := req.SvrName
-	svcName := c.Param("svc")
-	//log.Println(svcName)
-	clientInfo := clients[svcName]
-
-	resp := utils.GetHTTPGenericResponse(ctx, c, "", clientInfo.cli)
+	resp := new(service.SvrResponse)
 
 	c.JSON(consts.StatusOK, resp)
 }

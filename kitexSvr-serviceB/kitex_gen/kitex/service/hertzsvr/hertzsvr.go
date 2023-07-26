@@ -19,7 +19,8 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	serviceName := "HertzSvr"
 	handlerType := (*service.HertzSvr)(nil)
 	methods := map[string]kitex.MethodInfo{
-		"Request": kitex.NewMethodInfo(requestHandler, newHertzSvrRequestArgs, newHertzSvrRequestResult, false),
+		"Mul": kitex.NewMethodInfo(mulHandler, newHertzSvrMulArgs, newHertzSvrMulResult, false),
+		"Div": kitex.NewMethodInfo(divHandler, newHertzSvrDivArgs, newHertzSvrDivResult, false),
 	}
 	extra := map[string]interface{}{
 		"PackageName": "service",
@@ -35,22 +36,40 @@ func NewServiceInfo() *kitex.ServiceInfo {
 	return svcInfo
 }
 
-func requestHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*service.HertzSvrRequestArgs)
-	realResult := result.(*service.HertzSvrRequestResult)
-	success, err := handler.(service.HertzSvr).Request(ctx, realArg.Request)
+func mulHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*service.HertzSvrMulArgs)
+	realResult := result.(*service.HertzSvrMulResult)
+	success, err := handler.(service.HertzSvr).Mul(ctx, realArg.Request)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newHertzSvrRequestArgs() interface{} {
-	return service.NewHertzSvrRequestArgs()
+func newHertzSvrMulArgs() interface{} {
+	return service.NewHertzSvrMulArgs()
 }
 
-func newHertzSvrRequestResult() interface{} {
-	return service.NewHertzSvrRequestResult()
+func newHertzSvrMulResult() interface{} {
+	return service.NewHertzSvrMulResult()
+}
+
+func divHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*service.HertzSvrDivArgs)
+	realResult := result.(*service.HertzSvrDivResult)
+	success, err := handler.(service.HertzSvr).Div(ctx, realArg.Request)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newHertzSvrDivArgs() interface{} {
+	return service.NewHertzSvrDivArgs()
+}
+
+func newHertzSvrDivResult() interface{} {
+	return service.NewHertzSvrDivResult()
 }
 
 type kClient struct {
@@ -63,11 +82,21 @@ func newServiceClient(c client.Client) *kClient {
 	}
 }
 
-func (p *kClient) Request(ctx context.Context, request *service.SvrRequest) (r *service.SvrResponse, err error) {
-	var _args service.HertzSvrRequestArgs
+func (p *kClient) Mul(ctx context.Context, request *service.Request) (r *service.Response, err error) {
+	var _args service.HertzSvrMulArgs
 	_args.Request = request
-	var _result service.HertzSvrRequestResult
-	if err = p.c.Call(ctx, "Request", &_args, &_result); err != nil {
+	var _result service.HertzSvrMulResult
+	if err = p.c.Call(ctx, "Mul", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) Div(ctx context.Context, request *service.Request) (r *service.Response, err error) {
+	var _args service.HertzSvrDivArgs
+	_args.Request = request
+	var _result service.HertzSvrDivResult
+	if err = p.c.Call(ctx, "Div", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
