@@ -28,6 +28,8 @@ This is the CloudWeGo API Gateway Project, implementing an API Gateway which can
 
 网关服务占用端口号8888
 
+IDL管理平台占用端口号8889
+
 API具体调用方式请参考接口文档
 
 ### 1.3. 项目结构
@@ -45,6 +47,12 @@ API具体调用方式请参考接口文档
 ### 2.1. 启动etcd注册中心
 ``` bash
 etcd --log-level debug
+```
+
+### 2.2. 启动IDL管理平台
+- in directory `hertzSvr-IDLManagement`
+``` bash
+sh ./build.sh && sh ./output/bootstrap.sh 
 ```
 
 ### 2.2. 启动网关
