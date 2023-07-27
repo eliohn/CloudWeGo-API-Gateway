@@ -75,3 +75,23 @@ func _svcMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _addidlMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _deleteidlMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _queryidlMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _updateidlMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
