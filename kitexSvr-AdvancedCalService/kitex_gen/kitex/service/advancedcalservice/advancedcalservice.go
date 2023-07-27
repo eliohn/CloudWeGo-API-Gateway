@@ -23,7 +23,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"Fib":  kitex.NewMethodInfo(fibHandler, newAdvancedCalServiceFibArgs, newAdvancedCalServiceFibResult, false),
 	}
 	extra := map[string]interface{}{
-		"PackageName": "service",
+		"PackageName": "idlManager",
 	}
 	svcInfo := &kitex.ServiceInfo{
 		ServiceName:     serviceName,

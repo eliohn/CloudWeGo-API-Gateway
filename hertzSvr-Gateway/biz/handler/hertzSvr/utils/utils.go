@@ -47,7 +47,6 @@ func NewClient(destServiceName string, provider *generic.ThriftContentProvider, 
 		MaxIdleGlobal:     1000 * 10,
 	}))
 	opts = append(opts, client.WithTag("Cluster", destServiceName+"Cluster"))
-
 	cli, err := genericclient.NewClient(destServiceName, g, opts...)
 	if err != nil {
 		panic("Error: fail to establish the client " + err.Error())

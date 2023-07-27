@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-// FirstLevelCalServiceImpl implements the last service interface defined in the IDL.
+// FirstLevelCalServiceImpl implements the last idlManager interface defined in the IDL.
 type FirstLevelCalServiceImpl struct{}
 
 // Add implements the FirstLevelCalServiceImpl interface.

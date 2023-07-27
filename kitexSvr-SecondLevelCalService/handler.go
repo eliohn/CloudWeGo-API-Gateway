@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-// SecondLevelCalServiceImpl implements the last service interface defined in the IDL.
+// SecondLevelCalServiceImpl implements the last idlManager interface defined in the IDL.
 type SecondLevelCalServiceImpl struct{}
 
 // Mul implements the SecondLevelCalServiceImpl interface.

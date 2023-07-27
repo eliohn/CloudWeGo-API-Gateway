@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-// AdvancedCalServiceImpl implements the last service interface defined in the IDL.
+// AdvancedCalServiceImpl implements the last idlManager interface defined in the IDL.
 type AdvancedCalServiceImpl struct{}
 
 // Fact implements the AdvancedCalServiceImpl interface.

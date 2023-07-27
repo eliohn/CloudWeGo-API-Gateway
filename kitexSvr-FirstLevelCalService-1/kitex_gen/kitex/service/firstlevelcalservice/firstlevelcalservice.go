@@ -23,7 +23,7 @@ func NewServiceInfo() *kitex.ServiceInfo {
 		"Sub": kitex.NewMethodInfo(subHandler, newFirstLevelCalServiceSubArgs, newFirstLevelCalServiceSubResult, false),
 	}
 	extra := map[string]interface{}{
-		"PackageName": "service",
+		"PackageName": "idlManager",
 	}
 	svcInfo := &kitex.ServiceInfo{
 		ServiceName:     serviceName,

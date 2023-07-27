@@ -1,3 +1,3 @@
 kitexinfo:
-   ServiceName: 'kitex.service'
+   ServiceName: 'kitex.idlManager'
    ToolVersion: 'v0.6.1'

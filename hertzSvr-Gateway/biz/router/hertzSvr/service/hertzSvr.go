@@ -4,25 +4,15 @@ package service
 
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
-	service "hertzSvr-Gateway/biz/handler/hertzSvr/service"
 )
 
 /*
- This file will register all the routes of the services in the master idl.
- And it will update automatically when you use the "update" command for the idl.
+ This file will register all the routes of the services in the master idlManager.
+ And it will update automatically when you use the "update" command for the idlManager.
  So don't modify the contents of the file, or your code will be deleted when it is updated.
 */
 
 // Register register routes based on the IDL 'api.${HTTP Method}' annotation.
 func Register(r *server.Hertz) {
 
-	root := r.Group("/", rootMw()...)
-	{
-		_idl := root.Group("/idl", _idlMw()...)
-		_idl.POST("/add", append(_addidlMw(), service.AddIDL)...)
-		_idl.POST("/delete", append(_deleteidlMw(), service.DeleteIDL)...)
-		_idl.GET("/query", append(_queryidlMw(), service.QueryIDL)...)
-		_idl.POST("/register", append(_registeridlMw(), service.RegisterIDL)...)
-		_idl.POST("/update", append(_updateidlMw(), service.UpdateIDL)...)
-	}
 }
