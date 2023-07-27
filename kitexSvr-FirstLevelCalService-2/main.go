@@ -4,12 +4,12 @@ import (
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/server"
 	etcd "github.com/kitex-contrib/registry-etcd"
-	service "kitexSvr-serviceA-2/kitex_gen/kitex/service/hertzsvr"
+	service "kitexSvr-FirstLevelCalService/kitex_gen/kitex/service/firstlevelcalservice"
 	"log"
 	"net"
 )
 
-func InitEtcdRegistry(s *HertzSvrImpl, serviceName string, addr *net.TCPAddr) server.Server {
+func InitEtcdRegistry(s *FirstLevelCalServiceImpl, serviceName string, addr *net.TCPAddr) server.Server {
 	r, err := etcd.NewEtcdRegistry([]string{"localhost:2379"})
 	if err != nil {
 		log.Fatal("Error: fail to new etcd registry---" + err.Error())
@@ -17,7 +17,7 @@ func InitEtcdRegistry(s *HertzSvrImpl, serviceName string, addr *net.TCPAddr) se
 
 	ebi := &rpcinfo.EndpointBasicInfo{
 		ServiceName: serviceName,
-		Tags:        map[string]string{"Cluster": "AServiceCluster"},
+		Tags:        map[string]string{"Cluster": serviceName + "Cluster"},
 	}
 
 	svr := service.NewServer(s, server.WithRegistry(r), server.WithServiceAddr(addr), server.WithServerBasicInfo(ebi))
@@ -27,9 +27,9 @@ func InitEtcdRegistry(s *HertzSvrImpl, serviceName string, addr *net.TCPAddr) se
 
 func main() {
 	addr, _ := net.ResolveTCPAddr("tcp", ":9991")
-	s := new(HertzSvrImpl)
+	s := new(FirstLevelCalServiceImpl)
 
-	svr := InitEtcdRegistry(s, "AService", addr)
+	svr := InitEtcdRegistry(s, "FirstLevelCalService", addr)
 	err := svr.Run()
 
 	if err != nil {

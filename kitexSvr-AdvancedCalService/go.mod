@@ -1,4 +1,4 @@
-module kitexSvr-FunctionCalService
+module kitexSvr-AdvancedCalService
 
 go 1.20
 

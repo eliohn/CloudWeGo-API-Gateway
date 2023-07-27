@@ -10,7 +10,7 @@ struct Response{
     3: i32 data (api.body="data")
 }
 
-service FunctionCalService{
-    Response Fact(1: Request request)(api.post="/gateway/FunctionCalService/fact")
-    Response Fib(1: Request request)(api.post="/gateway/FunctionCalService/fib")
+service AdvancedCalService{
+    Response Fact(1: Request request)(api.post="/gateway/AdvancedCalService/fact")
+    Response Fib(1: Request request)(api.post="/gateway/AdvancedCalService/fib")
 }

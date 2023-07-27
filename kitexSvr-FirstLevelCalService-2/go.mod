@@ -1,4 +1,4 @@
-module kitexSvr-serviceA-2
+module kitexSvr-FirstLevelCalService
 
 go 1.20
 

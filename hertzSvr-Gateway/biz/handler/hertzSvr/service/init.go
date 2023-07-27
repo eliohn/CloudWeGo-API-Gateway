@@ -25,9 +25,9 @@ struct Response{
     3: i32 data (api.body="data")
 }
 
-service HertzSvr{
-    Response Add(1: Request request)(api.post="/gateway/AService/add")
-    Response Sub(1: Request request)(api.post="/gateway/AService/sub")
+service FirstLevelCalService{
+    Response Add(1: Request request)(api.post="/gateway/FirstLevelCalService/add")
+    Response Sub(1: Request request)(api.post="/gateway/FirstLevelCalService/sub")
 }`
 var idlContentB = `namespace go kitex.service
 
@@ -42,9 +42,9 @@ struct Response{
     3: i32 data (api.body="data")
 }
 
-service HertzSvr{
-    Response Mul(1: Request request)(api.post="/gateway/BService/mul")
-    Response Div(1: Request request)(api.post="/gateway/BService/div")
+service SecondLevelCalService{
+    Response Mul(1: Request request)(api.post="/gateway/SecondLevelCalService/mul")
+    Response Div(1: Request request)(api.post="/gateway/SecondLevelCalService/div")
 }`
 var idlContentC = `namespace go kitex.service
 
@@ -58,33 +58,33 @@ struct Response{
     3: i32 data (api.body="data")
 }
 
-service HertzSvr{
-    Response Fact(1: Request request)(api.post="/gateway/CService/fact")
-    Response Fib(1: Request request)(api.post="/gateway/CService/fib")
+service AdvancedCalService{
+    Response Fact(1: Request request)(api.post="/gateway/AdvancedCalService/fact")
+    Response Fib(1: Request request)(api.post="/gateway/AdvancedCalService/fib")
 }`
 
 // 初始化etcdresolver
 var resolver = utils.NewResolver()
 
 // 初始化三个服务对应的provider
-var providerA = utils.NewProvider(idlContentA)
-var providerB = utils.NewProvider(idlContentB)
-var providerC = utils.NewProvider(idlContentC)
+var firstLevelCalProvider = utils.NewProvider(idlContentA)
+var secondLevelCalProvider = utils.NewProvider(idlContentB)
+var advancedCalProvider = utils.NewProvider(idlContentC)
 
 // 初始化clientInfo
 var Clients = map[string]ClientInfo{
-	"AService": {
-		Provider: providerA,
-		Cli:      utils.NewClient("AService", providerA, resolver),
+	"FirstLevelCalService": {
+		Provider: firstLevelCalProvider,
+		Cli:      utils.NewClient("FirstLevelCalService", firstLevelCalProvider, resolver),
 	},
 
-	"BService": {
-		Provider: providerB,
-		Cli:      utils.NewClient("BService", providerB, resolver),
+	"SecondLevelCalService": {
+		Provider: secondLevelCalProvider,
+		Cli:      utils.NewClient("SecondLevelCalService", secondLevelCalProvider, resolver),
 	},
 
-	"CService": {
-		Provider: providerC,
-		Cli:      utils.NewClient("CService", providerC, resolver),
+	"AdvancedCalService": {
+		Provider: advancedCalProvider,
+		Cli:      utils.NewClient("AdvancedCalService", advancedCalProvider, resolver),
 	},
 }

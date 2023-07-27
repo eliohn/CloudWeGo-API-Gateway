@@ -1,4 +1,4 @@
 .idea
 .vscode
-hertzSvr/default.etcd
+hertzSvr-Gateway/default.etcd
 output
