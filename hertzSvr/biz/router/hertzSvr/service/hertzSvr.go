@@ -17,6 +17,15 @@ import (
 func Register(r *server.Hertz) {
 
 	root := r.Group("/", rootMw()...)
-	root.POST("/registerIDL", append(_registeridlMw(), service.RegisterIDL)...)
-	root.POST("/request", append(_requestMw(), service.Request)...)
+	root.POST("/AddIDL", append(_addidlMw(), service.AddIDL)...)
+	root.POST("/DeleteIDL", append(_deleteidlMw(), service.DeleteIDL)...)
+	root.POST("/QueryIDL", append(_queryidlMw(), service.QueryIDL)...)
+	root.POST("/UpdateIDL", append(_updateidlMw(), service.UpdateIDL)...)
+	{
+		_gateway := root.Group("/gateway", _gatewayMw()...)
+		{
+			_svc := _gateway.Group("/:svc", _svcMw()...)
+			_svc.POST("/request", append(_requestMw(), service.Request)...)
+		}
+	}
 }
