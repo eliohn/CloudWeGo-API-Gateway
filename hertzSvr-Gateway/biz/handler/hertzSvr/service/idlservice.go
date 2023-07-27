@@ -7,7 +7,7 @@ import (
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
-	service "hertzSvr/biz/model/hertzSvr/service"
+	"hertzSvr-Gateway/biz/model/hertzSvr/service"
 )
 
 // AddIDL .

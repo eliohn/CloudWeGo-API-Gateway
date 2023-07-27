@@ -1,4 +1,4 @@
-module hertzSvr
+module hertzSvr-Gateway
 
 go 1.20
 

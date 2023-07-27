@@ -3,7 +3,7 @@ package service
 import (
 	"github.com/cloudwego/kitex/client/genericclient"
 	"github.com/cloudwego/kitex/pkg/generic"
-	"hertzSvr/biz/handler/hertzSvr/utils"
+	"hertzSvr-Gateway/biz/handler/hertzSvr/utils"
 )
 
 type ClientInfo struct {

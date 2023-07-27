@@ -4,7 +4,7 @@ package main
 
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
-	"hertzSvr/biz/handler/hertzSvr/gateway"
+	"hertzSvr-Gateway/biz/handler/hertzSvr/gateway"
 )
 
 // customizeRegister registers customize routers.

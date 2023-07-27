@@ -4,8 +4,8 @@ import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
-	"hertzSvr/biz/handler/hertzSvr/service"
-	"hertzSvr/biz/handler/hertzSvr/utils"
+	"hertzSvr-Gateway/biz/handler/hertzSvr/service"
+	"hertzSvr-Gateway/biz/handler/hertzSvr/utils"
 )
 
 // Gateway API gateway

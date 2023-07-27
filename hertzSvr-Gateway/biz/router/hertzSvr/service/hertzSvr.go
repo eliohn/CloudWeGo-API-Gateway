@@ -4,7 +4,7 @@ package service
 
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
-	service "hertzSvr/biz/handler/hertzSvr/service"
+	service "hertzSvr-Gateway/biz/handler/hertzSvr/service"
 )
 
 /*
