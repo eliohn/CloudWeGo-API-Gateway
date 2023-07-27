@@ -85,16 +85,9 @@ curl --location 'http://localhost:8888/gateway/FirstLevelCalService/add' \
 - 收到response
 ```json
 {
-  "Header": {},
-  "StatusCode": 0,
-  "Body": {
-    "data": 3,
-    "message": "FirstLevelCal Service Add method success",
-    "success": true
-  },
-  "GeneralBody": null,
-  "ContentType": "application/json",
-  "Renderer": {}
+  "data": 3,
+  "message": "FirstLevelCal Service Add method success",
+  "success": true
 }
 ```
 
@@ -112,16 +105,9 @@ curl --location 'http://localhost:8888/gateway/SecondLevelCalService/mul' \
 - 收到response
 ```json
 {
-    "Header": {},
-    "StatusCode": 0,
-    "Body": {
-        "data": 58596,
-        "message": "SecondLevelCal Service Mul method success",
-        "success": true
-    },
-    "GeneralBody": null,
-    "ContentType": "application/json",
-    "Renderer": {}
+  "data": 58596,
+  "message": "SecondLevelCal Service Mul method success", 
+  "success": true
 }
 ```
 
@@ -138,16 +124,9 @@ curl --location 'http://localhost:8888/gateway/AdvancedCalService/fact' \
 - 收到response
 ```json
 {
-  "Header": {},
-  "StatusCode": 0,
-  "Body": {
-    "data": 3628800,
-    "message": "AdvancedCal Service Fact method success",
-    "success": true
-  },
-  "GeneralBody": null,
-  "ContentType": "application/json",
-  "Renderer": {}
+  "data": 3628800,
+  "message": "AdvancedCal Service Fact method success",
+  "success": true
 }
 ```
 

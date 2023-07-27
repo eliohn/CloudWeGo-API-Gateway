@@ -18,5 +18,5 @@ func Gateway(ctx context.Context, c *app.RequestContext) {
 	// 进行HTTP泛化调用
 	resp := utils.GetHTTPGenericResponse(ctx, c, "", clientInfo.Cli)
 
-	c.JSON(consts.StatusOK, resp)
+	c.JSON(consts.StatusOK, resp.Body)
 }
