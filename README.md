@@ -17,7 +17,7 @@ This is the CloudWeGo API Gateway Project, implementing an API Gateway which can
   - idl持久化数据库：选用sqlite
   - 负载均衡策略：选用加权轮询
 
-项目开发过程使用飞书进行管理。知识库链接已公开：[知识库](https://qiyaq6lc2gg.feishu.cn/wiki/R427wrwbziumfWkK4wwcdaugnlh)
+项目开发过程使用飞书进行管理。知识库链接已公开：[知识库](https://qiyaq6lc2gg.feishu.cn/wiki/space/7255927814334054404?ccm_open_type=lark_wiki_spaceLink)
 
 ### 1.2. 业务场景
 为便于展示，本项目使用业务场景为——不同类型计算功能服务API的调用，其中共三种计算服务：
