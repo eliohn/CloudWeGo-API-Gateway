@@ -7,7 +7,6 @@ import (
 	"hertzSvr-Gateway/biz/handler/hertzSvr"
 	"hertzSvr-Gateway/biz/handler/hertzSvr/idlManager"
 	"hertzSvr-Gateway/biz/handler/hertzSvr/utils"
-	"log"
 )
 
 // Gateway API gateway
@@ -17,8 +16,6 @@ func Gateway(ctx context.Context, c *app.RequestContext) {
 
 	// 获取服务对应的clientInfo
 	var clientInfo hertzSvr.ClientInfo
-	idl := idlManager.GetIDLContent("hello")
-	log.Println(idl)
 
 	// 查找缓存中是否有对应service的client，若无则进行创建并放入缓存
 	if _, isOk := hertzSvr.Clients[svcName]; isOk {

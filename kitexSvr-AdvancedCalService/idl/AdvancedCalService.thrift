@@ -6,7 +6,7 @@ struct Request{
 
 struct Response{
     1: bool success (api.body="success")
-    2: string message (api.body="message") //应该是JSON，用string代替
+    2: string message (api.body="message")
     3: i32 data (api.body="data")
 }
 
