@@ -103,7 +103,7 @@ func UpdateIDL(ctx context.Context, c *app.RequestContext) {
 }
 
 // QueryIDL .
-// 查询IDL,若服务存在则返回IDL,否则返回错误信息.注意错误信息保存在response.Idl中
+// 查询IDL,如果服务存在则返回IDL,否则返回错误信息.注意错误信息保存在response.Idl中
 // @router /idlManager/query [GET]
 func QueryIDL(ctx context.Context, c *app.RequestContext) {
 	var err error
