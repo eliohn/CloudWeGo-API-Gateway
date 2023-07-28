@@ -42,10 +42,21 @@ func UpdateIDL(ctx context.Context, c *app.RequestContext) {
 		}
 	} else {
 		// 若client不存在，则创建provider
-		provider := utils.NewProvider(idlContent)
-		clientInfo = hertzSvr.ClientInfo{
-			Provider: provider,
-			Cli:      utils.NewClient(req.SvcName, provider, hertzSvr.Resolver),
+		provider, err := utils.NewProvider(idlContent)
+		if err != nil {
+			c.JSON(consts.StatusBadRequest, &hertzSvr.Response{
+				Success: false,
+				Message: "Error: fail to load idl for service " + req.SvcName + "." + err.Error(),
+			})
+			return
+		}
+		clientInfo.Provider = provider
+		clientInfo.Cli, err = utils.NewClient(req.SvcName, provider, hertzSvr.Resolver)
+		if err != nil {
+			c.JSON(consts.StatusBadRequest, &hertzSvr.Response{
+				Success: false,
+				Message: "Error: fail to make new client for service " + req.SvcName + "." + err.Error(),
+			})
 		}
 		hertzSvr.Clients[req.SvcName] = clientInfo
 	}
