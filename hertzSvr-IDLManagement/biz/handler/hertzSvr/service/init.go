@@ -7,7 +7,7 @@ import (
 
 type IDLMessage struct {
 	ID      int
-	SvrName string
+	SvcName string
 	IDL     string
 }
 
