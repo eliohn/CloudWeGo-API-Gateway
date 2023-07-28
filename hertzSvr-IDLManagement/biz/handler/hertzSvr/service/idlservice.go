@@ -42,7 +42,7 @@ func AddIDL(ctx context.Context, c *app.RequestContext) {
 	c.JSON(consts.StatusOK, resp)
 }
 
-// DeleteIDL .
+// DeleteIDL
 // @router /idlManager/delete [POST]
 func DeleteIDL(ctx context.Context, c *app.RequestContext) {
 	var err error
