@@ -5,7 +5,7 @@ This is the CloudWeGo API Gateway Project, implementing an API Gateway which can
 | 姓名  | 学号        | 分工             |
 |-----|-----------|----------------|
 | 薛瑞宸 | 211250142 | 代码框架设计、业务代码编写  |
-| 金旭东 | 211250208 | IDL管理接口        |
+| 金煦东 | 211250208 | IDL管理接口        |
 | 刘克典 | 211230043 | 测试代码、测试报告与测试文档 |
 
 ## 1. Intro

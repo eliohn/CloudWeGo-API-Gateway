@@ -19,7 +19,10 @@ require (
 	github.com/golang/protobuf v1.5.0 // indirect
 	github.com/henrylee2cn/ameda v1.4.10 // indirect
 	github.com/henrylee2cn/goutil v0.0.0-20210127050712-89660552f6f8 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/klauspost/cpuid/v2 v2.0.9 // indirect
+	github.com/mattn/go-sqlite3 v1.14.17 // indirect
 	github.com/nyaruka/phonenumbers v1.0.55 // indirect
 	github.com/tidwall/gjson v1.13.0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
@@ -28,4 +31,6 @@ require (
 	golang.org/x/arch v0.0.0-20210923205945-b76863e36670 // indirect
 	golang.org/x/sys v0.0.0-20220412211240-33da011f77ad // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
+	gorm.io/driver/sqlite v1.5.2 // indirect
+	gorm.io/gorm v1.25.2 // indirect
 )
