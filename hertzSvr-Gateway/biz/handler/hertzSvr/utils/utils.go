@@ -25,19 +25,16 @@ func NewResolver() discovery.Resolver {
 
 // NewProvider 获取provider
 // content 为热加载idl的内容
-func NewProvider(content string) *generic.ThriftContentProvider {
+func NewProvider(content string) (*generic.ThriftContentProvider, error) {
 	p, err := generic.NewThriftContentProvider(content, map[string]string{})
-	if err != nil {
-		panic("Error: fail to load the thrift file " + err.Error())
-	}
-	return p
+	return p, err
 }
 
 // NewClient 获取泛化调用的client
-func NewClient(destServiceName string, provider *generic.ThriftContentProvider, resolver discovery.Resolver) genericclient.Client {
+func NewClient(destServiceName string, provider *generic.ThriftContentProvider, resolver discovery.Resolver) (genericclient.Client, error) {
 	g, err := generic.HTTPThriftGeneric(provider)
 	if err != nil {
-		panic("Error: fail to generic thrift " + err.Error())
+		return nil, err
 	}
 	// 对client的设置
 	var opts []client.Option
@@ -48,18 +45,15 @@ func NewClient(destServiceName string, provider *generic.ThriftContentProvider, 
 	}))
 	opts = append(opts, client.WithTag("Cluster", destServiceName+"Cluster"))
 	cli, err := genericclient.NewClient(destServiceName, g, opts...)
-	if err != nil {
-		panic("Error: fail to establish the client " + err.Error())
-	}
-	return cli
+	return cli, err
 }
 
 // GetHTTPGenericResponse 获取http泛化调用后的response
-func GetHTTPGenericResponse(ctx context.Context, c *app.RequestContext, methodName string, cli genericclient.Client) *generic.HTTPResponse {
+func GetHTTPGenericResponse(ctx context.Context, c *app.RequestContext, methodName string, cli genericclient.Client) (*generic.HTTPResponse, error) {
 	httpReq, err := adaptor.GetCompatRequest(c.GetRequest())
 	customReq, err := generic.FromHTTPRequest(httpReq)
 	if err != nil {
-		panic("Error: fail to generic from hertz request " + err.Error())
+		return nil, err
 	}
 	// customReq *generic.HttpRequest
 	// 由于 hertz 泛化的 method 是通过 bam 规则从 hertz request 中获取的，所以填空就行
@@ -67,9 +61,8 @@ func GetHTTPGenericResponse(ctx context.Context, c *app.RequestContext, methodNa
 	fmt.Println(cli)
 	resp, err := cli.GenericCall(ctx, methodName, customReq)
 	if err != nil {
-		panic("Error: fail to generic call " + err.Error())
+		return nil, err
 	}
-
 	realResp := resp.(*generic.HTTPResponse)
-	return realResp
+	return realResp, nil
 }
