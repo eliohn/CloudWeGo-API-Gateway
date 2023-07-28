@@ -2,3 +2,4 @@
 .vscode
 hertzSvr-Gateway/default.etcd
 output
+/hertzSvr-IDLManagement/hertzSvr-IDLManagement

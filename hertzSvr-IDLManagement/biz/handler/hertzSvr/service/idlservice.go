@@ -4,6 +4,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	service "hertzSvr-IDLManagement/biz/model/hertzSvr/service"
@@ -22,6 +23,22 @@ func AddIDL(ctx context.Context, c *app.RequestContext) {
 
 	resp := new(service.IDLResponse)
 
+	var svrInfo IDLMessage
+	fmt.Println(svrInfo.ID)
+	DB.First(&svrInfo, "svr_name = ?", req.Name)
+	if svrInfo.ID != 0 {
+		resp.Success = false
+		resp.Message = "ERROR:SERVICE ALREADY EXISTED"
+		c.JSON(consts.StatusOK, resp)
+		return
+	}
+
+	DB.Create(&IDLMessage{
+		SvrName: req.Name,
+		IDL:     req.Idl,
+	})
+	resp.Success = true
+	resp.Message = ""
 	c.JSON(consts.StatusOK, resp)
 }
 
@@ -37,7 +54,18 @@ func DeleteIDL(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp := new(service.IDLResponse)
+	var svrInfo IDLMessage
+	DB.First(&svrInfo, "svr_name = ?", req.Name)
+	if svrInfo.ID == 0 {
+		resp.Success = false
+		resp.Message = "ERROR:NO SUCH SERVICE"
+		c.JSON(consts.StatusOK, resp)
+		return
+	}
 
+	DB.Delete(&svrInfo, svrInfo.ID)
+	resp.Success = true
+	resp.Message = ""
 	c.JSON(consts.StatusOK, resp)
 }
 
@@ -51,8 +79,19 @@ func UpdateIDL(ctx context.Context, c *app.RequestContext) {
 		c.String(consts.StatusBadRequest, err.Error())
 		return
 	}
-
 	resp := new(service.IDLResponse)
+
+	var svrInfo IDLMessage
+	DB.First(&svrInfo, "svr_name = ?", req.Name)
+	if svrInfo.ID == 0 {
+		resp.Success = false
+		resp.Message = "ERROR:NO SUCH SERVICE"
+		c.JSON(consts.StatusOK, resp)
+		return
+	}
+	DB.Model(&svrInfo).Update("id_l", req.Idl)
+
+	resp.Success = true
 
 	c.JSON(consts.StatusOK, resp)
 }
@@ -67,74 +106,21 @@ func QueryIDL(ctx context.Context, c *app.RequestContext) {
 		c.String(consts.StatusBadRequest, err.Error())
 		return
 	}
+	resp := new(service.IDLInfo)
 
-	resp := service.IDLInfo{
+	var svrInfo IDLMessage
+	DB.First(&svrInfo, "svr_name = ?", req.Name)
+	if svrInfo.ID == 0 {
+		resp.Idl = "ERROR:NO SUCH SERVICE"
+		resp.Name = req.Name
+		c.JSON(consts.StatusOK, resp)
+		return
+	}
+
+	resp = &service.IDLInfo{
 		Name: req.Name,
-		Idl:  idls[req.Name],
+		Idl:  svrInfo.IDL,
 	}
 
 	c.JSON(consts.StatusOK, resp)
 }
-
-var idls = map[string]string{
-	"FirstLevelCalService":  idlContentA,
-	"SecondLevelCalService": idlContentB,
-	"AdvancedCalService":    idlContentC,
-}
-
-var idlContentA = `
-namespace go kitex.service
-
-struct Request{
-    1: i32 operand_1 (api.body="operand_1")
-    2: i32 operand_2 (api.body="operand_2")
-}
-
-struct Response{
-    1: bool success (api.body="success")
-    2: string message (api.body="message")
-    3: i32 data (api.body="data")
-}
-
-service FirstLevelCalService{
-    Response Add(1: Request request)(api.post="/gateway/FirstLevelCalService/add")
-    Response Sub(1: Request request)(api.post="/gateway/FirstLevelCalService/sub")
-}`
-
-var idlContentB = `
-namespace go kitex.service
-
-struct Request{
-    1: i32 operand_1 (api.body="operand_1")
-    2: i32 operand_2 (api.body="operand_2")
-}
-
-struct Response{
-    1: bool success (api.body="success")
-    2: string message (api.body="message")
-    3: i32 data (api.body="data")
-}
-
-service SecondLevelCalService{
-    Response Mul(1: Request request)(api.post="/gateway/SecondLevelCalService/mul")
-    Response Div(1: Request request)(api.post="/gateway/SecondLevelCalService/div")
-}`
-
-var idlContentC = `
-namespace go kitex.service
-
-struct Request{
-    1: i32 operand (api.body="operand")
-}
-
-struct Response{
-    1: bool success (api.body="success")
-    2: string message (api.body="message")
-    3: i32 data (api.body="data")
-}
-
-service AdvancedCalService{
-    Response Fact(1: Request request)(api.post="/gateway/AdvancedCalService/fact")
-    Response Fib(1: Request request)(api.post="/gateway/AdvancedCalService/fib")
-}
-`

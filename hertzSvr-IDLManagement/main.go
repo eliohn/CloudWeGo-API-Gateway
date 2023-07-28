@@ -4,9 +4,11 @@ package main
 
 import (
 	"github.com/cloudwego/hertz/pkg/app/server"
+	"hertzSvr-IDLManagement/biz/handler/hertzSvr/service"
 )
 
 func main() {
+	service.DB.AutoMigrate(&service.IDLMessage{})
 	h := server.New(server.WithHostPorts(":8889"))
 
 	register(h)
