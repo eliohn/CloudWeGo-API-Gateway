@@ -4,13 +4,13 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 	service "hertzSvr-IDLManagement/biz/model/hertzSvr/service"
 )
 
 // AddIDL .
+// 添加IDL，如果已有svcName，则返回错误信息
 // @router /idlManager/add [POST]
 func AddIDL(ctx context.Context, c *app.RequestContext) {
 	var err error
@@ -24,8 +24,8 @@ func AddIDL(ctx context.Context, c *app.RequestContext) {
 	resp := new(service.IDLResponse)
 
 	var svrInfo IDLMessage
-	fmt.Println(svrInfo.ID)
-	DB.First(&svrInfo, "svr_name = ?", req.Name)
+	//判断是否已有服务
+	DB.First(&svrInfo, "svc_name = ?", req.Name)
 	if svrInfo.ID != 0 {
 		resp.Success = false
 		resp.Message = "ERROR:SERVICE ALREADY EXISTED"
@@ -34,15 +34,16 @@ func AddIDL(ctx context.Context, c *app.RequestContext) {
 	}
 
 	DB.Create(&IDLMessage{
-		SvrName: req.Name,
+		SvcName: req.Name,
 		IDL:     req.Idl,
 	})
 	resp.Success = true
-	resp.Message = ""
+	resp.Message = "SUCCESS ADD"
 	c.JSON(consts.StatusOK, resp)
 }
 
-// DeleteIDL .
+// DeleteIDL
+// 删除IDL，如果不存在服务则返回错误信息
 // @router /idlManager/delete [POST]
 func DeleteIDL(ctx context.Context, c *app.RequestContext) {
 	var err error
@@ -55,7 +56,8 @@ func DeleteIDL(ctx context.Context, c *app.RequestContext) {
 
 	resp := new(service.IDLResponse)
 	var svrInfo IDLMessage
-	DB.First(&svrInfo, "svr_name = ?", req.Name)
+	//检查服务是否存在
+	DB.First(&svrInfo, "svc_name = ?", req.Name)
 	if svrInfo.ID == 0 {
 		resp.Success = false
 		resp.Message = "ERROR:NO SUCH SERVICE"
@@ -65,11 +67,12 @@ func DeleteIDL(ctx context.Context, c *app.RequestContext) {
 
 	DB.Delete(&svrInfo, svrInfo.ID)
 	resp.Success = true
-	resp.Message = ""
+	resp.Message = "SUCCESS DELETE"
 	c.JSON(consts.StatusOK, resp)
 }
 
 // UpdateIDL .
+// 更新服务，如果服务不存在则返回错误信息
 // @router /idlManager/update [POST]
 func UpdateIDL(ctx context.Context, c *app.RequestContext) {
 	var err error
@@ -82,7 +85,8 @@ func UpdateIDL(ctx context.Context, c *app.RequestContext) {
 	resp := new(service.IDLResponse)
 
 	var svrInfo IDLMessage
-	DB.First(&svrInfo, "svr_name = ?", req.Name)
+	//检查服务是否存在
+	DB.First(&svrInfo, "svc_name = ?", req.Name)
 	if svrInfo.ID == 0 {
 		resp.Success = false
 		resp.Message = "ERROR:NO SUCH SERVICE"
@@ -92,10 +96,12 @@ func UpdateIDL(ctx context.Context, c *app.RequestContext) {
 	DB.Model(&svrInfo).Update("id_l", req.Idl)
 
 	resp.Success = true
-
+	resp.Message = "SUCCESS UPDATE"
 	c.JSON(consts.StatusOK, resp)
 }
 
+// QueryIDL
+// 查询IDL,如果服务存在则返回IDL,否则返回错误信息.注意错误信息保存在response.Idl中
 // QueryIDL .
 // @router /idlManager/query [GET]
 func QueryIDL(ctx context.Context, c *app.RequestContext) {
@@ -109,7 +115,7 @@ func QueryIDL(ctx context.Context, c *app.RequestContext) {
 	resp := new(service.IDLInfo)
 
 	var svrInfo IDLMessage
-	DB.First(&svrInfo, "svr_name = ?", req.Name)
+	DB.First(&svrInfo, "svc_name = ?", req.Name)
 	if svrInfo.ID == 0 {
 		resp.Idl = "ERROR:NO SUCH SERVICE"
 		resp.Name = req.Name
