@@ -43,8 +43,8 @@ API具体调用方式请参考[接口文档](https://qiyaq6lc2gg.feishu.cn/wiki/
 ├── kitexSvr-AdvancedCalService     //高级计算服务
 ├── kitexSvr-FirstLevelCalService-1 //一级计算服务-实例1
 ├── kitexSvr-FirstLevelCalService-2 //一级计算服务-实例2
-└── kitexSvr-SecondLevelCalService  //二级计算服务
-
+├── kitexSvr-SecondLevelCalService  //二级计算服务
+└── testingFiles                    //测试文档与测试报告
 ```
 
 ## 2. Deploy
