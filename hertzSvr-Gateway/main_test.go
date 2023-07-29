@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+
 	/* 	"net/http/httptest" */
 	"bytes"
 	"encoding/json"
@@ -58,14 +59,14 @@ func BenchmarkFirstLevelServiceAdd(b *testing.B) {
 		resp, err := client.Do(request) //Do 方法发送请求，返回 HTTP 回复
 
 		if err != nil {
-			fmt.Println("发送请求失败", err.Error())
+			fmt.Println("send fail", err.Error())
 			return
 		}
 
 		respBytes, err := ioutil.ReadAll(resp.Body)
 
 		if err != nil {
-			fmt.Println("Read回复失败", err.Error())
+			fmt.Println("Read rep fail", err.Error())
 			return
 		}
 		//对返回的信息进行处理
@@ -80,9 +81,9 @@ func BenchmarkFirstLevelServiceAdd(b *testing.B) {
 
 		as := Assert(resultNumber1, int(resultNumber2))
 		if as {
-			fmt.Printf("向FirstLevelCalservice/Add传递的值为 %d和%d ，预期结果为%d,得到的计算结果为 %d，结果正确，测试通过\n", a, b, a+b, int(resultNumber2))
+			fmt.Printf("The value deliver to FirstLevelCalservice/Add are %d and %d ,expect %d, get %d,test passed\n", a, b, a+b, int(resultNumber2))
 		} else {
-			fmt.Printf("向FirstLevelCalservice/Add传递的值为 %d和%d ，预期结果为%d,得到的计算结果为 %d，结果错误，测试失败\n", a, b, a+b, int(resultNumber2))
+			fmt.Printf("The value deliver to FirstLevelCalservice/Add are %d and %d ,expect %d, get %d,test failed\n", a, b, a+b, int(resultNumber2))
 		}
 		request.Body.Close()
 	}
@@ -120,14 +121,14 @@ func BenchmarkFirstLevelServiceSub(b *testing.B) {
 		resp, err := client.Do(request) //Do 方法发送请求，返回 HTTP 回复
 
 		if err != nil {
-			fmt.Println("发送请求失败", err.Error())
+			fmt.Println("send fail", err.Error())
 			return
 		}
 
 		respBytes, err := ioutil.ReadAll(resp.Body)
 
 		if err != nil {
-			fmt.Println("Read回复失败", err.Error())
+			fmt.Println("Read rep fail", err.Error())
 			return
 		}
 		//对返回的信息进行处理
@@ -141,9 +142,9 @@ func BenchmarkFirstLevelServiceSub(b *testing.B) {
 
 		as := Assert(resultNumber1, int(resultNumber2))
 		if as {
-			fmt.Printf("向FirstLevelCalservice/Sub传递的值为 %d和%d ，预期结果为%d,得到的计算结果为%d，结果正确，测试通过\n", a, b, a-b, int(resultNumber2))
+			fmt.Printf("The value deliver to FirstLevelCalservice/Sub are %d and %d ,expect %d, get %d,test passed\n", a, b, a-b, int(resultNumber2))
 		} else {
-			fmt.Printf("向FirstLevelCalservice/Sub传递的值为 %d和%d ，预期结果为%d,得到的计算结果为%d，结果错误，测试失败\n", a, b, a-b, int(resultNumber2))
+			fmt.Printf("The value deliver to FirstLevelCalservice/Sub are %d and %d ,expect %d, get %d,test failed\n", a, b, a-b, int(resultNumber2))
 		}
 		request.Body.Close()
 	}
@@ -181,14 +182,14 @@ func BenchmarkSecondLevelServiceMul(b *testing.B) {
 		resp, err := client.Do(request) //Do 方法发送请求，返回 HTTP 回复
 
 		if err != nil {
-			fmt.Println("发送请求失败", err.Error())
+			fmt.Println("send fail", err.Error())
 			return
 		}
 
 		respBytes, err := ioutil.ReadAll(resp.Body)
 
 		if err != nil {
-			fmt.Println("Read回复失败", err.Error())
+			fmt.Println("Read rep fail", err.Error())
 			return
 		}
 		//对返回的信息进行处理
@@ -203,9 +204,9 @@ func BenchmarkSecondLevelServiceMul(b *testing.B) {
 
 		as := Assert(resultNumber1, int(resultNumber2))
 		if as {
-			fmt.Printf("向SecondLevelCalservice/Mul传递的值为 %d和%d ，预期结果为%d,得到的计算结果为 %d，结果正确，测试通过\n", a, b, a*b, int(resultNumber2))
+			fmt.Printf("The value deliver to SecondLevelCalservice/Mul are %d and %d ,expect %d, get %d,test passed\n", a, b, a*b, int(resultNumber2))
 		} else {
-			fmt.Printf("向SecondLevelCalservice/Mul传递的值为 %d和%d ，预期结果为%d,得到的计算结果为 %d，结果错误，测试失败\n", a, b, a*b, int(resultNumber2))
+			fmt.Printf("The value deliver to SecondLevelCalservice/Mul are %d and %d ,expect %d, get %d,test failed\n", a, b, a*b, int(resultNumber2))
 		}
 		request.Body.Close()
 	}
@@ -243,14 +244,14 @@ func BenchmarkSecondLevelServiceDiv(b *testing.B) {
 		resp, err := client.Do(request) //Do 方法发送请求，返回 HTTP 回复
 
 		if err != nil {
-			fmt.Println("发送请求失败", err.Error())
+			fmt.Println("send fail", err.Error())
 			return
 		}
 
 		respBytes, err := ioutil.ReadAll(resp.Body)
 
 		if err != nil {
-			fmt.Println("Read回复失败", err.Error())
+			fmt.Println("Read rep fail", err.Error())
 			return
 		}
 		//对返回的信息进行处理
@@ -267,9 +268,9 @@ func BenchmarkSecondLevelServiceDiv(b *testing.B) {
 
 			as := Assert(resultNumber1, int(resultNumber2))
 			if as {
-				fmt.Printf("向SecondLevelCalservice/Div传递的值为 %d和%d ，预期结果为%d,得到的计算结果为 %d，结果正确，测试通过\n", a, b, a/b, int(resultNumber2))
+				fmt.Printf("The value deliver to SecondLevelCalservice/Div are %d and %d ,expect %d, get %d,test passed\n", a, b, a/b, int(resultNumber2))
 			} else {
-				fmt.Printf("向econdLevelCalservice/Div传递的值为 %d和%d ，预期结果为%d,得到的计算结果为 %d，结果错误，测试失败\n", a, b, a/b, int(resultNumber2))
+				fmt.Printf("The value deliver to SecondLevelCalservice/Div are %d and %d ,expect %d, get %d,test failed\n", a, b, a/b, int(resultNumber2))
 			}
 		}
 
@@ -305,14 +306,14 @@ func BenchmarkAdvancedLevelServiceFact(b *testing.B) {
 		resp, err := client.Do(request) //Do 方法发送请求，返回 HTTP 回复
 
 		if err != nil {
-			fmt.Println("发送请求失败", err.Error())
+			fmt.Println("send fail", err.Error())
 			return
 		}
 
 		respBytes, err := ioutil.ReadAll(resp.Body)
 
 		if err != nil {
-			fmt.Println("Read回复失败", err.Error())
+			fmt.Println("Read rep fail", err.Error())
 			return
 		}
 		//对返回的信息进行处理
@@ -327,9 +328,9 @@ func BenchmarkAdvancedLevelServiceFact(b *testing.B) {
 
 		as := Assert(resultNumber1, int(resultNumber2))
 		if as {
-			fmt.Printf("向AdvancedCalservice/Fact传递的值为 %d ，预期结果为%d,得到的计算结果为 %d，结果正确，测试通过\n", a, resultNumber1, int(resultNumber2))
+			fmt.Printf("The value deliver to AdvancedCalservice/Fact is %d ,expect %d, get %d, test passed\n", a, resultNumber1, int(resultNumber2))
 		} else {
-			fmt.Printf("向AdvancedCalservice/Fact传递的值为 %d ，预期结果为%d,得到的计算结果为 %d，结果错误，测试失败\n", a, resultNumber1, int(resultNumber2))
+			fmt.Printf("The value deliver to AdvancedCalservice/Fact is %d ,expect %d, get %d, test failed\n", a, resultNumber1, int(resultNumber2))
 		}
 
 		request.Body.Close()
@@ -386,9 +387,9 @@ func BenchmarkAdvancedLevelServiceFib(b *testing.B) {
 
 		as := Assert(resultNumber1, int(resultNumber2))
 		if as {
-			fmt.Printf("向AdvancedCalservice/Fib传递的值为 %d ，预期结果为%d,得到的计算结果为 %d，结果正确，测试通过\n", a, resultNumber1, int(resultNumber2))
+			fmt.Printf("The value deliver to AdvancedCalservice/Fib is %d ,expect %d, get %d, test passed\n", a, resultNumber1, int(resultNumber2))
 		} else {
-			fmt.Printf("向AdvancedCalsrvice/Fib传递的值为 %d ，预期结果为%d,得到的计算结果为 %d，结果错误，测试失败\n", a, resultNumber1, int(resultNumber2))
+			fmt.Printf("The value deliver to AdvancedCalservice/Fib is %d ,expect %d, get %d, test passed\n", a, resultNumber1, int(resultNumber2))
 		}
 
 		request.Body.Close()
