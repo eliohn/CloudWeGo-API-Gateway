@@ -189,7 +189,7 @@ curl --location 'http://localhost:8888/gateway/AdvancedCalService/fact' \
 4. 若用户直接调用网关的idl更新接口，而相关client此时还未被创建，则网关会直接使用管理平台中最新的idl进行client创建
 
 ## Test
-- in directory `hertzSvr`
+- in directory `hertzSvr-Gateway`
 ``` bash
 go test -bench=. main_test.go
 ```
