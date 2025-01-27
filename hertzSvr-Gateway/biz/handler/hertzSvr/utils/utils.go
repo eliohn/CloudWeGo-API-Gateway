@@ -10,16 +10,18 @@ import (
 	"github.com/cloudwego/kitex/pkg/connpool"
 	"github.com/cloudwego/kitex/pkg/discovery"
 	"github.com/cloudwego/kitex/pkg/generic"
-	etcd "github.com/kitex-contrib/registry-etcd"
-	"log"
+	consul "github.com/kitex-contrib/registry-consul"
 )
 
 // NewResolver 获取注册中心的resolver
 func NewResolver() discovery.Resolver {
-	r, err := etcd.NewEtcdResolver([]string{"localhost:2379"})
-	if err != nil {
-		log.Fatal("Error: fail to new etcd resolver---" + err.Error())
-	}
+	//r, err := etcd.NewEtcdResolver([]string{"localhost:2379"})
+	//consulClient, err := consulapi.NewClient(consulConfig)
+	//if err != nil {
+	//	log.Fatal("Error: fail to new etcd resolver---" + err.Error())
+	//}
+	r, _ := consul.NewConsulResolver("10.3.5.103:8500")
+
 	return r
 }
 
